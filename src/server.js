@@ -9,6 +9,10 @@ import { rconCommand } from "./rcon.js";
 import { LogTailer } from "./logtail.js";
 import { pingStatus } from "./status.js";
 import { basicAuth, wsAuthorized } from "./auth.js";
+import { makeWhitelist } from "./whitelist.js";
+import { makeProperties } from "./properties.js";
+import { makeJarManager } from "./jardir.js";
+import { makeLifecycle } from "./lifecycle.js";
 
 validateConfig();
 
@@ -44,6 +48,88 @@ app.post("/api/command", async (req, res) => {
     res.status(502).json({ command, error: String(err.message || err) });
   }
 });
+
+// ---- management: whitelist, properties, plugins, mods, lifecycle ----
+const whitelist = makeWhitelist(config.rcon, config.server.propertiesPath);
+const properties = makeProperties(config.server.propertiesPath);
+const plugins = makeJarManager(config.server.pluginsDir, { kind: "plugin", loaders: ["paper", "spigot", "bukkit"] });
+const mods = makeJarManager(config.server.modsDir, { kind: "mod", loaders: ["fabric", "forge", "neoforge", "quilt"] });
+const lifecycle = makeLifecycle(config.server.restartCommand);
+// Mods are only manageable on a modded server (mods/ exists) or when explicitly configured.
+const modsEnabled = Boolean(process.env.MC_MODS_DIR) || mods.available();
+
+// async route wrapper -> JSON errors
+const h = (fn) => (req, res) =>
+  Promise.resolve(fn(req, res)).catch((e) => res.status(e.status || 500).json({ error: String(e.message || e) }));
+
+const extractGameVersion = (v) => {
+  const m = String(v || "").match(/(\d+\.\d+(?:\.\d+)?)/);
+  return m ? m[1] : null;
+};
+async function detectGameVersion() {
+  try {
+    return extractGameVersion((await pingStatus(config.mc)).version);
+  } catch {
+    return null;
+  }
+}
+
+app.get("/api/capabilities", async (_req, res) => {
+  let version = null;
+  try { version = (await pingStatus(config.mc)).version; } catch {}
+  res.json({
+    plugins: plugins.available(),
+    mods: modsEnabled,
+    properties: properties.available(),
+    restart: lifecycle.available(),
+    logStream: Boolean(config.logPath),
+    serverType: mods.available() ? "modded" : "plugin",
+    version,
+    gameVersion: extractGameVersion(version),
+  });
+});
+
+app.get("/api/whitelist", h(async (_req, res) => res.json(await whitelist.get())));
+app.post("/api/whitelist/add", h(async (req, res) => res.json({ result: await whitelist.add(String(req.body?.name || "").trim()) })));
+app.post("/api/whitelist/remove", h(async (req, res) => res.json({ result: await whitelist.remove(String(req.body?.name || "").trim()) })));
+app.post("/api/whitelist/enabled", h(async (req, res) => res.json({ result: await whitelist.setEnabled(Boolean(req.body?.enabled)) })));
+
+app.get("/api/properties", h(async (_req, res) => res.json(properties.get())));
+app.post("/api/properties", h(async (req, res) => {
+  const patch = req.body?.patch;
+  if (!patch || typeof patch !== "object") throw new Error("patch object required");
+  res.json({ all: properties.update(patch) });
+}));
+
+function registerJarRoutes(prefix, mgr, isEnabled) {
+  const guard = (res) => {
+    if (isEnabled()) return true;
+    res.status(409).json({ error: `${prefix} management not available on this server` });
+    return false;
+  };
+  app.get(`/api/${prefix}`, (_req, res) => { if (guard(res)) res.json({ items: mgr.list() }); });
+  app.post(`/api/${prefix}/install`, h(async (req, res) => {
+    if (!guard(res)) return;
+    const { url, slug, gameVersion } = req.body || {};
+    let result;
+    if (url) result = await mgr.installUrl(String(url));
+    else if (slug) result = await mgr.installModrinth(String(slug), gameVersion ? String(gameVersion) : await detectGameVersion());
+    else throw new Error("provide a url or a Modrinth slug");
+    res.json({ installed: result });
+  }));
+  app.post(`/api/${prefix}/toggle`, h(async (req, res) => {
+    if (!guard(res)) return;
+    res.json(mgr.toggle(String(req.body?.name || ""), Boolean(req.body?.enabled)));
+  }));
+  app.post(`/api/${prefix}/remove`, h(async (req, res) => {
+    if (!guard(res)) return;
+    res.json(mgr.remove(String(req.body?.name || "")));
+  }));
+}
+registerJarRoutes("plugins", plugins, () => plugins.available());
+registerJarRoutes("mods", mods, () => modsEnabled);
+
+app.post("/api/server/restart", h(async (_req, res) => res.json(await lifecycle.restart())));
 
 const server = http.createServer(app);
 

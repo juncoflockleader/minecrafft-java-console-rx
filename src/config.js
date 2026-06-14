@@ -24,6 +24,7 @@ function loadDotEnv() {
 loadDotEnv();
 
 const rconHost = process.env.RCON_HOST || "127.0.0.1";
+const serverDir = process.env.MC_SERVER_DIR || "";
 
 export const config = {
   host: process.env.HOST || "127.0.0.1",
@@ -41,6 +42,17 @@ export const config = {
   auth: {
     user: process.env.WEBUI_USER || "",
     password: process.env.WEBUI_PASSWORD || "",
+  },
+  server: {
+    // Filesystem access to the server install (for plugins/mods/properties).
+    // When unset, those management panels are disabled.
+    dir: serverDir,
+    pluginsDir: process.env.MC_PLUGINS_DIR || (serverDir ? path.join(serverDir, "plugins") : ""),
+    modsDir: process.env.MC_MODS_DIR || (serverDir ? path.join(serverDir, "mods") : ""),
+    propertiesPath: serverDir ? path.join(serverDir, "server.properties") : "",
+    // Shell command used by the "restart" button (e.g. a launchctl kickstart).
+    // When unset, the restart endpoint returns 501.
+    restartCommand: process.env.MC_RESTART_COMMAND || "",
   },
 };
 

@@ -22,7 +22,7 @@ function encode(id, type, body) {
  * Handles multi-packet responses by sending a trailing sentinel packet and
  * concatenating all command-id responses received before the sentinel echo.
  */
-export function rconCommand(command, { host, port, password, timeout = 5000 } = {}) {
+function attempt(command, { host, port, password, timeout = 5000 } = {}) {
   const CMD_ID = 1;
   const END_ID = 2;
   return new Promise((resolve, reject) => {
@@ -81,4 +81,25 @@ export function rconCommand(command, { host, port, password, timeout = 5000 } = 
       }
     });
   });
+}
+
+/**
+ * Run a command with a short-lived RCON connection, retrying once on transient
+ * connection errors (the Minecraft RCON listener handles one connection at a
+ * time, so rapid back-to-back commands can occasionally drop). Never retries an
+ * authentication failure.
+ */
+export async function rconCommand(command, opts = {}) {
+  const { retries = 1, retryDelayMs = 250, ...conn } = opts;
+  let lastErr;
+  for (let i = 0; i <= retries; i++) {
+    try {
+      return await attempt(command, conn);
+    } catch (err) {
+      lastErr = err;
+      if (/auth failed/i.test(err.message)) throw err;
+      if (i < retries) await new Promise((r) => setTimeout(r, retryDelayMs));
+    }
+  }
+  throw lastErr;
 }

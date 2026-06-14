@@ -14,34 +14,83 @@
         <span class="pill" id="pill-version">—</span>
         <span class="pill" id="pill-players">—</span>
         <span class="pill" id="pill-motd"></span>
+        <button class="restart-btn" id="restart-btn" hidden>⟳ Restart</button>
       </div>
     </header>
 
-    <section class="quick" id="quick">
-      <button data-cmd="list">Players</button>
-      <button data-cmd="tps">TPS</button>
-      <button data-cmd="time set day">Day</button>
-      <button data-cmd="time set night">Night</button>
-      <button data-cmd="weather clear">Clear sky</button>
-      <button data-cmd="weather rain">Rain</button>
-      <button data-cmd="save-all">Save</button>
-      <button data-cmd="difficulty">Difficulty?</button>
+    <nav class="tabs" id="tabs">
+      <button data-tab="console" class="active">Console</button>
+      <button data-tab="whitelist">Whitelist</button>
+      <button data-tab="plugins">Plugins</button>
+      <button data-tab="settings">Settings</button>
+      <button data-tab="mods">Mods</button>
+    </nav>
+
+    <!-- Console -->
+    <section class="panel active" id="panel-console">
+      <div class="quick" id="quick">
+        <button data-cmd="list">Players</button>
+        <button data-cmd="tps">TPS</button>
+        <button data-cmd="time set day">Day</button>
+        <button data-cmd="time set night">Night</button>
+        <button data-cmd="weather clear">Clear sky</button>
+        <button data-cmd="weather rain">Rain</button>
+        <button data-cmd="save-all">Save</button>
+      </div>
+      <main class="console" id="console" aria-live="polite"></main>
+      <form class="prompt" id="prompt">
+        <span class="caret">&gt;</span>
+        <input id="input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+          placeholder="server command (e.g. gamemode creative junco) — ↑/↓ for history" />
+        <button type="submit">Send</button>
+      </form>
     </section>
 
-    <main class="console" id="console" aria-live="polite"></main>
+    <!-- Whitelist -->
+    <section class="panel" id="panel-whitelist">
+      <div class="card">
+        <div class="row spread">
+          <h2>Whitelist</h2>
+          <label class="switch"><input type="checkbox" id="wl-enabled" /> <span>enabled</span></label>
+        </div>
+        <form class="row" id="wl-add-form">
+          <input id="wl-name" placeholder="player name" autocomplete="off" />
+          <button type="submit">Add</button>
+        </form>
+        <ul class="list" id="wl-list"></ul>
+      </div>
+    </section>
 
-    <form class="prompt" id="prompt">
-      <span class="caret">&gt;</span>
-      <input
-        id="input"
-        type="text"
-        autocomplete="off"
-        autocapitalize="off"
-        spellcheck="false"
-        placeholder="type a server command (e.g. say hello, gamemode creative junco) — ↑/↓ for history"
-      />
-      <button type="submit">Send</button>
-    </form>
+    <!-- Plugins -->
+    <section class="panel" id="panel-plugins">
+      <div class="card">
+        <h2>Install plugin</h2>
+        <form class="row" id="pl-install-form">
+          <input id="pl-source" placeholder="Modrinth slug (e.g. luckperms) or https://…/plugin.jar" autocomplete="off" />
+          <button type="submit">Install</button>
+        </form>
+        <p class="hint">Modrinth slugs resolve the newest build for this server version. Installed plugins load on next restart.</p>
+      </div>
+      <div class="card">
+        <div class="row spread"><h2>Installed plugins</h2><button class="ghost" id="pl-refresh">Refresh</button></div>
+        <ul class="list" id="pl-list"></ul>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="panel" id="panel-settings">
+      <div class="card">
+        <div class="row spread"><h2>Server settings</h2><button class="ghost" id="set-refresh">Refresh</button></div>
+        <p class="hint">Edits write to <code>server.properties</code>; most take effect after a restart.</p>
+        <div class="form-grid" id="set-grid"></div>
+        <div class="row"><button id="set-save">Save settings</button><span id="set-status" class="muted"></span></div>
+      </div>
+    </section>
+
+    <!-- Mods -->
+    <section class="panel" id="panel-mods">
+      <div id="mods-content"></div>
+    </section>
 
     <script src="/app.js"></script>
   </body>
