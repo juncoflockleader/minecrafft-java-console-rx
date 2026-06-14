@@ -7,9 +7,12 @@ import { Readable } from "node:stream";
 const UA = "minecrafft-java-console-rx";
 
 // Only allow a safe basename ending in .jar (blocks path traversal).
+// Mod/plugin jars often contain '+' (e.g. fabric-api-0.151.0+26.1.2.jar).
 function safeJar(name) {
   const base = path.basename(name);
-  if (base !== name || !/^[\w.\- ]+\.jar$/.test(base)) throw new Error("invalid jar filename");
+  if (base !== name || base.includes("..") || !/\.jar$/i.test(base) || !/^[\w.\-+() ]+\.jar$/i.test(base)) {
+    throw new Error("invalid jar filename");
+  }
   return base;
 }
 
@@ -57,7 +60,7 @@ export function makeJarManager(dir, { kind = "plugin", loaders = ["paper", "spig
       let u;
       try { u = new URL(url); } catch { throw new Error("invalid URL"); }
       if (u.protocol !== "https:" && u.protocol !== "http:") throw new Error("URL must be http(s)");
-      let fname = safeJar(path.basename(u.pathname));
+      let fname = safeJar(decodeURIComponent(path.basename(u.pathname)));
       await download(url, path.join(dir, fname));
       return { name: fname };
     },
@@ -86,7 +89,7 @@ export function makeJarManager(dir, { kind = "plugin", loaders = ["paper", "spig
       const v = versions[0];
       const file = v.files.find((f) => f.primary) || v.files[0];
       if (!file) throw new Error("Modrinth version has no downloadable file");
-      const fname = safeJar(path.basename(new URL(file.url).pathname));
+      const fname = safeJar(decodeURIComponent(path.basename(new URL(file.url).pathname)));
       await download(file.url, path.join(dir, fname));
       return { name: fname, version: v.version_number, gameVersions: v.game_versions };
     },
