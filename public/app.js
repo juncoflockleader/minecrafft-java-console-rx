@@ -227,6 +227,34 @@ function jarPanel({ kind, listEl, installForm, sourceInput, refreshBtn }) {
       btn.disabled = false;
     }
   });
+  if (uploadForm && fileInput) {
+    uploadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const f = fileInput.files[0];
+      if (!f) return;
+      const btn = uploadForm.querySelector("button");
+      const old = btn.textContent;
+      btn.textContent = "Uploading…";
+      btn.disabled = true;
+      try {
+        const r = await fetch(`/api/${kind}/upload?name=${encodeURIComponent(f.name)}`, {
+          method: "POST",
+          headers: { "content-type": "application/java-archive" },
+          body: f,
+        });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.error || `HTTP ${r.status}`);
+        fileInput.value = "";
+        await load();
+        alert(`Uploaded ${d.installed.name}. Restart the server to load it.`);
+      } catch (err) {
+        alert("Upload failed: " + err.message);
+      } finally {
+        btn.textContent = old;
+        btn.disabled = false;
+      }
+    });
+  }
   if (refreshBtn) refreshBtn.onclick = load;
   return { load };
 }
@@ -237,6 +265,8 @@ const pluginsPanel = jarPanel({
   installForm: document.getElementById("pl-install-form"),
   sourceInput: document.getElementById("pl-source"),
   refreshBtn: document.getElementById("pl-refresh"),
+  uploadForm: document.getElementById("pl-upload-form"),
+  fileInput: document.getElementById("pl-file"),
 });
 
 // ===== settings =====
@@ -291,7 +321,10 @@ function renderModsPanel() {
     return;
   }
   c.innerHTML =
-    `<div class="card"><h2>Install mod</h2><form class="row" id="mod-install-form"><input id="mod-source" placeholder="Modrinth slug or https://…/mod.jar" autocomplete="off"/><button type="submit">Install</button></form><p class="hint">Resolves the newest Fabric/Forge build for this version.</p></div>` +
+    `<div class="card"><h2>Install mod</h2>` +
+    `<form class="row" id="mod-install-form"><input id="mod-source" placeholder="Modrinth slug or https://…/mod.jar" autocomplete="off"/><button type="submit">Install</button></form>` +
+    `<form class="row" id="mod-upload-form"><input type="file" id="mod-file" accept=".jar"/><button type="submit">Upload .jar</button></form>` +
+    `<p class="hint">Install from Modrinth/URL, or upload your own <code>.jar</code> (e.g. a mod you built). Loads on next restart.</p></div>` +
     `<div class="card"><div class="row spread"><h2>Installed mods</h2><button class="ghost" id="mod-refresh">Refresh</button></div><ul class="list" id="mod-list"></ul></div>`;
   jarPanel({
     kind: "mods",
@@ -299,6 +332,8 @@ function renderModsPanel() {
     installForm: c.querySelector("#mod-install-form"),
     sourceInput: c.querySelector("#mod-source"),
     refreshBtn: c.querySelector("#mod-refresh"),
+    uploadForm: c.querySelector("#mod-upload-form"),
+    fileInput: c.querySelector("#mod-file"),
   }).load();
 }
 

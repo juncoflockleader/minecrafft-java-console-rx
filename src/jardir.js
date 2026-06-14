@@ -117,5 +117,15 @@ export function makeJarManager(dir, { kind = "plugin", loaders = ["paper", "spig
       }
       return { name: base, removed: true };
     },
+
+    // Save an uploaded jar (raw Buffer). Verifies the zip/jar magic bytes ("PK").
+    saveUpload(filename, buffer) {
+      ensureDir();
+      const base = safeJar(decodeURIComponent(String(filename || "")));
+      if (!buffer || !buffer.length) throw new Error("empty upload");
+      if (buffer.length < 4 || buffer[0] !== 0x50 || buffer[1] !== 0x4b) throw new Error("not a .jar (zip) file");
+      fs.writeFileSync(path.join(dir, base), buffer);
+      return { name: base, size: buffer.length };
+    },
   };
 }

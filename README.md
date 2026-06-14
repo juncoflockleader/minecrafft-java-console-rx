@@ -8,7 +8,7 @@ A lightweight web UI to control a **Minecraft Java** server (Paper / Spigot / Va
 - **Live log stream** — tails the server log file over a WebSocket; new lines appear in real time, with recent history replayed on connect.
 - **Status panel** — version, online/max players, and MOTD via the Minecraft Server List Ping (no RCON needed).
 - **Whitelist manager** — toggle the whitelist on/off and add/remove players (over RCON, applied live).
-- **Plugin manager** — list installed plugins, enable/disable (`.jar` ⇄ `.jar.disabled`), delete, and **install** from a [Modrinth](https://modrinth.com) slug (auto-resolves the newest build for your server version) or a direct `.jar` URL.
+- **Plugin manager** — list installed plugins, enable/disable (`.jar` ⇄ `.jar.disabled`), delete, **install** from a [Modrinth](https://modrinth.com) slug (auto-resolves the newest build for your server version) or a direct `.jar` URL, and **upload your own `.jar`** straight from the browser.
 - **Settings editor** — edit common `server.properties` keys (difficulty, gamemode, view-distance, PvP, …) with friendly controls.
 - **Mod manager** — same install/manage flow for Fabric/Forge **mods**, activated when the server has a `mods/` directory (or `MC_MODS_DIR` is set). On a Paper/Bukkit server the Mods tab explains that the server uses plugins instead.
 - **Restart button** — runs an operator-configured command (e.g. `launchctl kickstart`) to restart the server.
@@ -64,7 +64,7 @@ Open the printed URL (default `http://127.0.0.1:8765`).
 - `POST /api/command` `{ "command": "list" }` → `{ command, response }`
 - `GET /api/whitelist` · `POST /api/whitelist/add|remove` `{ name }` · `POST /api/whitelist/enabled` `{ enabled }`
 - `GET /api/properties` · `POST /api/properties` `{ patch: { key: value } }`
-- `GET /api/plugins` · `POST /api/plugins/install` `{ slug | url, gameVersion? }` · `POST /api/plugins/toggle` `{ name, enabled }` · `POST /api/plugins/remove` `{ name }`
+- `GET /api/plugins` · `POST /api/plugins/install` `{ slug | url, gameVersion? }` · `POST /api/plugins/upload?name=<file>.jar` (raw jar body) · `POST /api/plugins/toggle` `{ name, enabled }` · `POST /api/plugins/remove` `{ name }`
 - `GET /api/mods` … (same shape as plugins; `409` when the server isn't modded)
 - `POST /api/server/restart` → runs `MC_RESTART_COMMAND`
 - `WS /ws` — messages from server: `history`, `log`, `echo`, `response`, `error`, `system`; send `{ "type":"command", "command":"..." }`.

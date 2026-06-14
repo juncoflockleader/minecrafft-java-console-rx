@@ -125,6 +125,11 @@ function registerJarRoutes(prefix, mgr, isEnabled) {
     if (!guard(res)) return;
     res.json(mgr.remove(String(req.body?.name || "")));
   }));
+  // Upload a jar: raw binary body, filename in ?name= query.
+  app.post(`/api/${prefix}/upload`, express.raw({ type: () => true, limit: "256mb" }), h(async (req, res) => {
+    if (!guard(res)) return;
+    res.json({ installed: mgr.saveUpload(req.query.name, req.body) });
+  }));
 }
 registerJarRoutes("plugins", plugins, () => plugins.available());
 registerJarRoutes("mods", mods, () => modsEnabled);

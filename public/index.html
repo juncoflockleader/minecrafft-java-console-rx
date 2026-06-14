@@ -69,7 +69,11 @@
           <input id="pl-source" placeholder="Modrinth slug (e.g. luckperms) or https://…/plugin.jar" autocomplete="off" />
           <button type="submit">Install</button>
         </form>
-        <p class="hint">Modrinth slugs resolve the newest build for this server version. Installed plugins load on next restart.</p>
+        <form class="row" id="pl-upload-form">
+          <input type="file" id="pl-file" accept=".jar" />
+          <button type="submit">Upload .jar</button>
+        </form>
+        <p class="hint">Install from Modrinth/URL, or upload your own <code>.jar</code>. Plugins load on next restart.</p>
       </div>
       <div class="card">
         <div class="row spread"><h2>Installed plugins</h2><button class="ghost" id="pl-refresh">Refresh</button></div>
