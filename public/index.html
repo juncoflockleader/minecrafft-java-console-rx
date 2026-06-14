@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecrafft Console</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">⛏ <span>Minecrafft Console</span></div>
+      <div class="status" id="status">
+        <span class="pill" id="pill-conn" data-state="off">connecting…</span>
+        <span class="pill" id="pill-version">—</span>
+        <span class="pill" id="pill-players">—</span>
+        <span class="pill" id="pill-motd"></span>
+      </div>
+    </header>
+
+    <section class="quick" id="quick">
+      <button data-cmd="list">Players</button>
+      <button data-cmd="tps">TPS</button>
+      <button data-cmd="time set day">Day</button>
+      <button data-cmd="time set night">Night</button>
+      <button data-cmd="weather clear">Clear sky</button>
+      <button data-cmd="weather rain">Rain</button>
+      <button data-cmd="save-all">Save</button>
+      <button data-cmd="difficulty">Difficulty?</button>
+    </section>
+
+    <main class="console" id="console" aria-live="polite"></main>
+
+    <form class="prompt" id="prompt">
+      <span class="caret">&gt;</span>
+      <input
+        id="input"
+        type="text"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="type a server command (e.g. say hello, gamemode creative junco) — ↑/↓ for history"
+      />
+      <button type="submit">Send</button>
+    </form>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

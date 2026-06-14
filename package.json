@@ -1,0 +1,18 @@
+{
+  "name": "minecrafft-java-console-rx",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Web UI to control a Minecraft Java (Paper/Vanilla) server over RCON, with live log streaming.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  }
+}

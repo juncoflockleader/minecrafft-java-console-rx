@@ -1,0 +1,22 @@
+# Example systemd unit for minecrafft-java-console-rx (Linux).
+# Install:
+#   sudo cp docs/minecrafft-console.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now minecrafft-console
+# Configuration is read from the project's .env file (EnvironmentFile below).
+
+[Unit]
+Description=Minecrafft Java Console (web UI)
+After=network.target
+
+[Service]
+Type=simple
+User=minecraft
+WorkingDirectory=/opt/minecrafft-java-console-rx
+EnvironmentFile=/opt/minecrafft-java-console-rx/.env
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
