@@ -127,21 +127,44 @@ async function pollStatus() {
       pp.textContent = "—";
       pm.textContent = "";
     }
-  } catch {}
+    lastOnline = !!s.online;
+    updateLifecycleButtons(lastOnline);
+  } catch {
+    lastOnline = false;
+    updateLifecycleButtons(false);
+  }
 }
 
-// ===== capabilities + restart =====
+// ===== capabilities + lifecycle (start/stop/restart) =====
 let caps = {};
+let lastOnline = false;
 async function loadCaps() {
   try { caps = await api("/api/capabilities"); } catch { caps = {}; }
-  const rb = document.getElementById("restart-btn");
-  rb.hidden = !caps.restart;
+  updateLifecycleButtons(lastOnline);
 }
-document.getElementById("restart-btn").onclick = async () => {
-  if (!confirm("Restart the Minecraft server now?")) return;
-  try { await post("/api/server/restart"); addLine("⟳ restart requested", "system"); }
-  catch (e) { alert("Restart failed: " + e.message); }
-};
+// Start shows only when the server is down; Restart/Stop only when it's up.
+function updateLifecycleButtons(online) {
+  document.getElementById("start-btn").hidden = !(caps.start && !online);
+  document.getElementById("restart-btn").hidden = !(caps.restart && online);
+  document.getElementById("stop-btn").hidden = !(caps.stop && online);
+}
+function wireLifecycle(id, path, label, confirmMsg) {
+  document.getElementById(id).onclick = async () => {
+    if (confirmMsg && !confirm(confirmMsg)) return;
+    addLine(`⟳ ${label} requested…`, "system");
+    try {
+      await post(path);
+    } catch (e) {
+      alert(`${label} failed: ` + e.message);
+      return;
+    }
+    setTimeout(pollStatus, 1500);
+    setTimeout(pollStatus, 6000);
+  };
+}
+wireLifecycle("start-btn", "/api/server/start", "Start", null);
+wireLifecycle("restart-btn", "/api/server/restart", "Restart", "Restart the Minecraft server now?");
+wireLifecycle("stop-btn", "/api/server/stop", "Stop", "Stop the Minecraft server?");
 
 // ===== whitelist =====
 async function loadWhitelist() {

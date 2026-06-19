@@ -126,11 +126,15 @@ body {
 .prompt button:hover { background: #6cc285; }
 
 /* ---- restart button ---- */
-.restart-btn {
-  background: #6b2330; color: #fff; border: 1px solid #87303f;
-  border-radius: 999px; padding: 4px 12px; font-size: 12px; cursor: pointer;
+.start-btn, .restart-btn, .stop-btn {
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; cursor: pointer; color: #fff;
 }
-.restart-btn:hover { background: #87303f; }
+.start-btn { background: var(--accent-dim); border: 1px solid var(--accent); color: #0b0d10; font-weight: 600; }
+.start-btn:hover { background: var(--accent); }
+.restart-btn { background: #6b5320; border: 1px solid #8a6d2a; }
+.restart-btn:hover { background: #8a6d2a; }
+.stop-btn { background: #6b2330; border: 1px solid #87303f; }
+.stop-btn:hover { background: #87303f; }
 
 /* ---- tabs ---- */
 .tabs {

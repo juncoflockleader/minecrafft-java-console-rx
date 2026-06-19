@@ -11,7 +11,7 @@ A lightweight web UI to control a **Minecraft Java** server (Paper / Spigot / Va
 - **Plugin manager** — list installed plugins, enable/disable (`.jar` ⇄ `.jar.disabled`), delete, **install** from a [Modrinth](https://modrinth.com) slug (auto-resolves the newest build for your server version) or a direct `.jar` URL, and **upload your own `.jar`** straight from the browser.
 - **Settings editor** — edit common `server.properties` keys (difficulty, gamemode, view-distance, PvP, …) with friendly controls.
 - **Mod manager** — same install/manage flow for Fabric/Forge **mods**, activated when the server has a `mods/` directory (or `MC_MODS_DIR` is set). On a Paper/Bukkit server the Mods tab explains that the server uses plugins instead.
-- **Restart button** — runs an operator-configured command (e.g. `launchctl kickstart`) to restart the server.
+- **Lifecycle buttons** — operator-configured **Start / Stop / Restart**. The Start button appears when the server is offline (launch it from the browser); Restart/Stop appear when it's running.
 - **Optional HTTP Basic Auth** — gate the UI (and the WebSocket) behind a username/password.
 
 > **Plugins vs mods:** Paper/Spigot/Bukkit servers load **plugins**; Fabric/Forge servers load **mods**. They are not interchangeable. This tool manages plugins by default and unlocks the Mods panel only on a modded server.
@@ -52,6 +52,8 @@ Open the printed URL (default `http://127.0.0.1:8765`).
 | `MC_SERVER_DIR` | _(empty)_ | Server install dir — enables the plugins / mods / settings panels (`<dir>/plugins`, `<dir>/mods`, `<dir>/server.properties`) |
 | `MC_PLUGINS_DIR` | `<MC_SERVER_DIR>/plugins` | Override the plugins directory |
 | `MC_MODS_DIR` | `<MC_SERVER_DIR>/mods` | Override the mods directory; setting it force-enables the Mods panel |
+| `MC_START_COMMAND` | _(empty)_ | Shell command the "Start" button runs (e.g. `sudo launchctl bootstrap system /Library/LaunchDaemons/com.junco.minecraft.plist`) |
+| `MC_STOP_COMMAND` | _(empty)_ | Shell command the "Stop" button runs (e.g. `sudo launchctl bootout …`) |
 | `MC_RESTART_COMMAND` | _(empty)_ | Shell command the "Restart" button runs (e.g. `sudo launchctl kickstart -k system/com.junco.minecraft`) |
 | `WEBUI_USER` / `WEBUI_PASSWORD` | _(empty)_ | Enable Basic Auth when both set |
 
@@ -66,7 +68,7 @@ Open the printed URL (default `http://127.0.0.1:8765`).
 - `GET /api/properties` · `POST /api/properties` `{ patch: { key: value } }`
 - `GET /api/plugins` · `POST /api/plugins/install` `{ slug | url, gameVersion? }` · `POST /api/plugins/upload?name=<file>.jar` (raw jar body) · `POST /api/plugins/toggle` `{ name, enabled }` · `POST /api/plugins/remove` `{ name }`
 - `GET /api/mods` … (same shape as plugins; `409` when the server isn't modded)
-- `POST /api/server/restart` → runs `MC_RESTART_COMMAND`
+- `POST /api/server/start` · `POST /api/server/stop` · `POST /api/server/restart` → run `MC_START_COMMAND` / `MC_STOP_COMMAND` / `MC_RESTART_COMMAND`
 - `WS /ws` — messages from server: `history`, `log`, `echo`, `response`, `error`, `system`; send `{ "type":"command", "command":"..." }`.
 
 ## Running as a service

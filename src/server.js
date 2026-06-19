@@ -54,7 +54,11 @@ const whitelist = makeWhitelist(config.rcon, config.server.propertiesPath);
 const properties = makeProperties(config.server.propertiesPath);
 const plugins = makeJarManager(config.server.pluginsDir, { kind: "plugin", loaders: ["paper", "spigot", "bukkit"] });
 const mods = makeJarManager(config.server.modsDir, { kind: "mod", loaders: ["fabric", "forge", "neoforge", "quilt"] });
-const lifecycle = makeLifecycle(config.server.restartCommand);
+const lifecycle = makeLifecycle({
+  start: config.server.startCommand,
+  stop: config.server.stopCommand,
+  restart: config.server.restartCommand,
+});
 // Mods are only manageable on a modded server (mods/ exists) or when explicitly configured.
 const modsEnabled = Boolean(process.env.MC_MODS_DIR) || mods.available();
 
@@ -81,7 +85,9 @@ app.get("/api/capabilities", async (_req, res) => {
     plugins: plugins.available(),
     mods: modsEnabled,
     properties: properties.available(),
-    restart: lifecycle.available(),
+    start: lifecycle.canStart(),
+    stop: lifecycle.canStop(),
+    restart: lifecycle.canRestart(),
     logStream: Boolean(config.logPath),
     serverType: mods.available() ? "modded" : "plugin",
     version,
@@ -134,6 +140,8 @@ function registerJarRoutes(prefix, mgr, isEnabled) {
 registerJarRoutes("plugins", plugins, () => plugins.available());
 registerJarRoutes("mods", mods, () => modsEnabled);
 
+app.post("/api/server/start", h(async (_req, res) => res.json(await lifecycle.start())));
+app.post("/api/server/stop", h(async (_req, res) => res.json(await lifecycle.stop())));
 app.post("/api/server/restart", h(async (_req, res) => res.json(await lifecycle.restart())));
 
 const server = http.createServer(app);

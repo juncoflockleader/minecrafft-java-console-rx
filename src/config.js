@@ -50,8 +50,11 @@ export const config = {
     pluginsDir: process.env.MC_PLUGINS_DIR || (serverDir ? path.join(serverDir, "plugins") : ""),
     modsDir: process.env.MC_MODS_DIR || (serverDir ? path.join(serverDir, "mods") : ""),
     propertiesPath: serverDir ? path.join(serverDir, "server.properties") : "",
-    // Shell command used by the "restart" button (e.g. a launchctl kickstart).
-    // When unset, the restart endpoint returns 501.
+    // Shell commands for the start/stop/restart buttons (e.g. launchctl
+    // bootstrap/bootout/kickstart). Each is optional; an unset one disables its
+    // button. Never built from user input.
+    startCommand: process.env.MC_START_COMMAND || "",
+    stopCommand: process.env.MC_STOP_COMMAND || "",
     restartCommand: process.env.MC_RESTART_COMMAND || "",
   },
 };
