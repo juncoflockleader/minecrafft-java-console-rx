@@ -59,7 +59,8 @@
         "equatorial_trench": {
           "y_band": [137, 143],
           "depth": 4,
-          "notes": "Recessed channel around the whole sphere at the equator; gray-concrete back wall, iron rim shelves."
+          "black_belt": "the trench back wall (y138-142) is a black_concrete 'belt'. The backrooms reskin had clobbered most of it to yellow_terracotta (its replace-filter box reached the shell at the equator); restored 2026-06-20 via ds_belt_restore.py (per-angle inward march recolors only the outermost shell run -> black, leaving the interior maze yellow). Iron rims at y137/y143.",
+          "notes": "Recessed channel around the whole sphere at the equator; black-concrete back wall (belt), iron rim shelves."
         },
         "hull_paneling": "10 light-gray latitude seam rings (iron recoloured) for the paneled look",
         "hangar": {
