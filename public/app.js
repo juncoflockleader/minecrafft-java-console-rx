@@ -207,7 +207,7 @@ document.getElementById("wl-add-form").addEventListener("submit", async (e) => {
 });
 
 // ===== jar panels (plugins + mods share this) =====
-function jarPanel({ kind, listEl, installForm, sourceInput, refreshBtn }) {
+function jarPanel({ kind, listEl, installForm, sourceInput, refreshBtn, uploadForm, fileInput }) {
   async function load() {
     let data;
     try { data = await api(`/api/${kind}`); }
