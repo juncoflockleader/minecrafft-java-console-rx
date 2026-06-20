@@ -76,6 +76,8 @@
             "plane": { "x": 165, "y": [119, 140], "z": [101, 123] },
             "trigger": "stone pressure plates inside (x162) and outside (x167) the bay; auto-opens on approach from either side, auto-closes ~5s after you leave (won't close while you're standing in it)",
             "manual": "function dsgate:open  /  function dsgate:close",
+            "forcefield": "passable blue particle shimmer (minecraft:dust, force mode) across the opening whenever the bay is open — fly through it like the magnetic field",
+            "klaxon": "5-beep woo-wee note_block.bass alarm that sounds when the gate cycles open or closed",
             "source": "minecraft/datapacks/deathstar_gate (deployed to world/datapacks on the mini)"
           }
         }
