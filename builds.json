@@ -85,7 +85,9 @@
           "separation": "the y118 deck + a curved bulkhead at x132 separate the hangar (above) from the facility; main entry is an auto iron-door (signed 'FACILITY') at x132",
           "elevator": "central ladder shaft at (120,112) linking all decks; each deck has a foyer with an auto iron-door gate (stone pressure plates)",
           "spiral_stair": "stone-brick spiral staircase at (120,100), y104-143, around a lit central newel with iron-bar railings; links all decks (8 steps/revolution)",
-          "layout": "every deck is enclosed (white_concrete 'steel' walls + floor/ceiling) and built out as a confusing corridor MAZE (recursive-backtracker, 2-wide passages, ~3200 cells total), lit by hanging lanterns. The elevator + spiral cores are kept clear; each deck has one gated chamber (auto iron-door + sign) named for its facility.",
+          "layout": "every deck is enclosed and built out as a confusing corridor MAZE (recursive-backtracker, 2-wide passages, ~3200 cells total). The elevator + spiral cores are kept clear; each deck has one gated chamber (auto iron-door + sign) named for its facility.",
+          "theme": "BACKROOMS — mustard-yellow walls + floor (yellow_terracotta), off-white dropped ceiling with flush fluorescent panels (sea_lantern). Reskinned via replace-filters so doors/signs/pool/elevator survive.",
+          "spiral_landings": "radius-4 landing rings added at each deck level so you can step off the spiral onto the deck without falling into the well (treads are at radius 3, untouched).",
           "decks": {
             "y104": "Armory — smithing line, weapon lockers (barrels), armor stands, munitions",
             "y110": "Barracks — bunk rows, footlockers, lanterns",
