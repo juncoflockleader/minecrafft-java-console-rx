@@ -107,9 +107,16 @@
   ],
   "entities": [
     {
+      "name": "Battle Station (flying)",
+      "id": "arsenal:station",
+      "spawnCommand": "/station",
+      "notes": "Pilotable flying station (arsenal mod). Right-click to board; W+look to fly (drifts toward aim), A/D strafe; no gravity / hovers; R fires the superlaser (orbital crater). Scale 6, 1000 HP. Placeholder iron-golem model for now (custom sphere model = Phase 3). /deathray <x y z> also exists as a standalone op command."
+    },
+    {
       "name": "Mech (Jaeger)",
-      "id": "mech:mech",
+      "id": "arsenal:mech",
       "spawnCommand": "/mech",
+      "mod": "arsenal (folded in from the retired mech-mod 2026-06-20; old id mech:mech is gone)",
       "scale": 3.5,
       "controls": "right-click to pilot; WASD walk + mouse steer; sprint to charge; R fires the plasma cannon",
       "model": "custom GeckoLib 5.4.5 humanoid Jaeger (legs/torso/pauldrons/cockpit head/arms) with idle+walk animations, JiJ-bundled; replaced the iron-golem placeholder. Geometry/texture are a first pass (refine in Blockbench).",
