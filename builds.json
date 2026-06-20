@@ -1,0 +1,51 @@
+{
+  "$comment": "Registry of structures we've built in the world, with coordinates. Append new builds here. Coordinates are Minecraft block coords (x, y, z).",
+  "world": {
+    "server": "mac-mini.local:25565",
+    "edition": "Fabric 1.21.11",
+    "spawn": { "x": 192, "y": 66, "z": 112 }
+  },
+  "builds": [
+    {
+      "name": "Spawn Castle",
+      "type": "structure",
+      "material": "stone_bricks",
+      "created": "2026-06-19",
+      "bounds": { "x": [198, 228], "y": [61, 80], "z": [97, 127] },
+      "floorY": 66,
+      "tp": "213 68 112",
+      "features": [
+        "31x31 battlemented outer walls (top y73, merlons y74)",
+        "4 corner towers, 5x5, to y79 (roof) with battlements y80",
+        "central keep 11x11 to y77, with door/windows and interior lighting",
+        "west gatehouse: 3-wide opening at z111-113, faces spawn"
+      ]
+    },
+    {
+      "name": "Castle Moat",
+      "type": "terrain",
+      "material": "water",
+      "created": "2026-06-19",
+      "bounds": { "x": [193, 233], "y": [62, 66], "z": [92, 132] },
+      "waterSurfaceY": 65,
+      "notes": "3-wide water ring just outside the walls; stone-lined basin with an outer lip so it doesn't leak. Continuous around all four sides."
+    },
+    {
+      "name": "Drawbridge",
+      "type": "structure",
+      "material": "oak_planks",
+      "created": "2026-06-19",
+      "bounds": { "x": [194, 196], "y": [66, 70], "z": [110, 114] },
+      "tp": "195 67 112",
+      "notes": "Spans the west moat at the gate (walk z111-113). Oak-fence railings, lanterns on the posts, and chains rising up the gatehouse front. Stone path leads from spawn onto the bridge."
+    }
+  ],
+  "entities": [
+    {
+      "name": "Mech (placeholder)",
+      "id": "mech:mech",
+      "spawnCommand": "/mech",
+      "notes": "Rideable IronGolem-based mech from mech-mod. Right-click to pilot, WASD to drive. Not a fixed location — spawned on demand."
+    }
+  ]
+}
