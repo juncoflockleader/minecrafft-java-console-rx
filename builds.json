@@ -67,15 +67,16 @@
           "deck_radius": 44,
           "deck_center": { "x": 120, "y": 118, "z": 112 },
           "bay_door": { "face": "+x (toward spawn)", "x": [150, 172], "y": [119, 140], "z": [101, 123] },
-          "tp_into_hangar": "120 119 112",
+          "tp_into_hangar": "150 119 112",
           "tp_outside_door": "168 130 112",
-          "notes": "Gray-concrete deck across the lower third with a domed ceiling. Framed bay-door tunnel through the hull (open to space). Floor light grid, two landing pads, dome lights, and a glass-fronted control booth at the back. A mech is parked on the deck.",
+          "notes": "REBUILT (ds_hangar.py): the maze that had capped the bay was cleared from x133..163, y120 up to the dome, restoring a tall domed bay (open to ~y155+). Clean gray-concrete deck at y118, flush floor light grid, two yellow/black landing pads (148,100 and 148,124), dome lights, and a glass-fronted control booth at the back-left (x134-139). A scaled-up Jaeger mech is parked at (150,119,112) facing the gate. Bulkhead (x132 + FACILITY door), the blast-door gate (x165) and its trigger plates (x162/x167) were left fully intact.",
           "gate": {
             "type": "bi-parting blast doors (iron), animated, no mods",
             "mechanism": "vanilla datapack 'deathstar_gate' (functions dsgate:*), frame animation on a tick loop",
             "plane": { "x": 165, "y": [119, 140], "z": [101, 123] },
             "trigger": "stone pressure plates inside (x162) and outside (x167) the bay; auto-opens on approach from either side, auto-closes ~5s after you leave (won't close while you're standing in it)",
             "manual": "function dsgate:open  /  function dsgate:close",
+            "status": "WORKING (fixed 2026-06-20). The 1.21.11 server (datapack format 94.1) rejected the old pack.mcmeta (pack_format+supported_formats) — format >81 now REQUIRES min_format/max_format. Updated pack.mcmeta to {min_format:[4,0],max_format:[9999,0]}. NOTE: the special #minecraft:tick tag only re-attaches to the server loop on a full RESTART, not /reload — restart after editing datapacks. Run 'function dsgate:install' once if the dsgate scoreboard objective is ever missing.",
             "forcefield": "passable blue particle shimmer (minecraft:dust, force mode) across the opening whenever the bay is open — fly through it like the magnetic field",
             "klaxon": "5-beep woo-wee note_block.bass alarm that sounds when the gate cycles open or closed",
             "source": "minecraft/datapacks/deathstar_gate (deployed to world/datapacks on the mini)"
@@ -85,19 +86,19 @@
           "separation": "the y118 deck + a curved bulkhead at x132 separate the hangar (above) from the facility; main entry is an auto iron-door (signed 'FACILITY') at x132",
           "elevator": "central ladder shaft at (120,112) linking all decks; each deck has a foyer with an auto iron-door gate (stone pressure plates)",
           "spiral_stair": "stone-brick spiral staircase at (120,100), y104-143, around a lit central newel with iron-bar railings; links all decks (8 steps/revolution)",
-          "layout": "every deck is enclosed and built out as a confusing corridor MAZE (recursive-backtracker, 2-wide passages, ~3200 cells total). The elevator + spiral cores are kept clear; each deck has one gated chamber (auto iron-door + sign) named for its facility.",
-          "theme": "BACKROOMS — mustard-yellow walls + floor (yellow_terracotta), off-white dropped ceiling with flush fluorescent panels (sea_lantern). Reskinned via replace-filters so doors/signs/pool/elevator survive.",
-          "spiral_landings": "radius-4 landing rings added at each deck level so you can step off the spiral onto the deck without falling into the well (treads are at radius 3, untouched).",
-          "room_access": "each deck's named facility room opens DIRECTLY off the elevator/ladder foyer via a west auto iron-door (so it's never lost in the maze); a second auto-door leads from the room into the maze.",
+          "maze_status": "FROZEN — the recursive-backtracker maze still fills each facility-deck donut, but the generator script is ABANDONED: every run did a full clear-pass that wiped the foyers/rooms/hangar. Do NOT regenerate it. All further edits are additive and confined to defined boxes.",
+          "layout": "per-deck topology (exactly): ladder room --DoorA--> named facility room --DoorB--> maze. Each facility room is a fully enclosed box at x100..114 / z105..119 (interior x101..113, z106..118), so it's cleanly separated from the surrounding maze. DoorA (east wall, x114) opens onto a carved foyer (x115..119) leading to the ladder at x120; DoorB (west wall, x100) opens onto a short stub (x96..99) that breaks into the maze. Both are auto iron-doors (stone pressure plates).",
+          "spiral_landings": "radius-4 landing rings at each deck level so you can step off the spiral onto the deck (treads at radius 3, untouched).",
+          "room_access": "each named room is reached DIRECTLY from the ladder foyer (DoorA) and is never lost in the maze; DoorB is the only way onward into the maze. Built by minecraft/scripts/ds_rooms.py (additive, bounded).",
           "decks": {
-            "y104": "Armory — smithing line, weapon lockers (barrels), armor stands, munitions",
-            "y110": "Barracks — bunk rows, footlockers, lanterns",
-            "y118": "Offices / concourse — cubicles, hangar access",
-            "y126": "Control Center — console banks (levers + redstone lamps), big screen wall, command chairs",
-            "y134": "Conference room — long table, head command chair, blue holo/screen wall",
-            "y142": "Amenities — swimming pool, cafe + kitchen, restrooms"
+            "y104": "Command Center — andesite floor, big screen wall (black + light-blue/cyan panels), console banks (levers + redstone lamps), command chairs",
+            "y110": "Living Room — brown carpet, L-shaped couch, coffee table, bookshelves, wall TV, plants, hanging lanterns",
+            "y118": "Cafe + kitchen — counter with smoker/furnace/cauldron/barrels, bistro tables with chairs; same deck as the hangar bulkhead access",
+            "y126": "Restrooms — quartz/glazed-terracotta, stalls with doors + cauldron toilets, sink counter + glass mirrors",
+            "y134": "Conference Room — long blackstone boardroom table, chairs both sides + head chair, blue holo screen wall",
+            "y142": "Swimming Pool — recessed prismarine basin with water, dark-prismarine deck, pool ladder, quartz loungers, sea-lantern lighting"
           },
-          "tp_examples": { "control_center": "100 127 112", "conference": "92 135 112", "pool": "107 144 102" }
+          "tp_examples": { "command_center": "107 105 112", "living_room": "107 111 112", "cafe": "107 119 112", "restrooms": "107 127 112", "conference": "107 135 112", "pool": "107 143 112" }
         }
       },
       "notes": "Giant hollow iron sphere, ~101 blocks across, 1-block hole-free shell. Floats west of spawn, clear of the castle. tp drops you inside the hollow interior."
@@ -105,10 +106,13 @@
   ],
   "entities": [
     {
-      "name": "Mech (placeholder)",
+      "name": "Mech (Jaeger)",
       "id": "mech:mech",
       "spawnCommand": "/mech",
-      "notes": "Rideable IronGolem-based mech from mech-mod. Right-click to pilot, WASD to drive. Not a fixed location — spawned on demand."
+      "scale": 3.5,
+      "controls": "right-click to pilot; WASD walk + mouse steer; sprint to charge; R fires the plasma cannon",
+      "model": "custom GeckoLib 5.4.5 humanoid Jaeger (legs/torso/pauldrons/cockpit head/arms) with idle+walk animations, JiJ-bundled; replaced the iron-golem placeholder. Geometry/texture are a first pass (refine in Blockbench).",
+      "notes": "Rideable IronGolem-based Jaeger from mech-mod, scaled to ~9-10 blocks via minecraft:scale (model + hitbox). HP 400, step height 3.0 (stomps over walls), speed 0.45, never despawns. Combat: sprint-charge (1.6x), CRUSH (damages+hurls entities it walks into while moving), and a server-authoritative PLASMA CANNON on the R key (beam along look, 14 dmg + ignite, no block damage, ~15-tick cooldown). Armored: immune to fall/fire/lava/drown/cactus/falling-block/in-wall, but takes combat damage. Iron-golem model is still the placeholder visual (custom GeckoLib model is the next step). Needs the mod on BOTH client and server. Spawned on demand via /mech."
     }
   ]
 }
