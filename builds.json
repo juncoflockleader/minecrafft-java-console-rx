@@ -80,6 +80,19 @@
             "klaxon": "5-beep woo-wee note_block.bass alarm that sounds when the gate cycles open or closed",
             "source": "minecraft/datapacks/deathstar_gate (deployed to world/datapacks on the mini)"
           }
+        },
+        "facility_interior": {
+          "separation": "the y118 deck + a curved bulkhead at x132 separate the hangar (above) from the facility; main entry is an auto iron-door (signed 'FACILITY') at x132",
+          "elevator": "central ladder shaft at (120,112) linking all decks; each deck has a foyer with an auto iron-door gate (stone pressure plates)",
+          "decks": {
+            "y104": "Armory — smithing line, weapon lockers (barrels), armor stands, munitions",
+            "y110": "Barracks — bunk rows, footlockers, lanterns",
+            "y118": "Offices / concourse — cubicles, hangar access",
+            "y126": "Control Center — console banks (levers + redstone lamps), big screen wall, command chairs",
+            "y134": "Conference room — long table, head command chair, blue holo/screen wall",
+            "y142": "Amenities — swimming pool, cafe + kitchen, restrooms"
+          },
+          "tp_examples": { "control_center": "100 127 112", "conference": "92 135 112", "pool": "107 144 102" }
         }
       },
       "notes": "Giant hollow iron sphere, ~101 blocks across, 1-block hole-free shell. Floats west of spawn, clear of the castle. tp drops you inside the hollow interior."
