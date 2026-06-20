@@ -1,0 +1,24 @@
+scoreboard players add #g dsgate 1
+execute if score #g dsgate matches 1 run fill 165 119 112 165 140 112 air
+execute if score #g dsgate matches 2 run fill 165 119 111 165 140 111 air
+execute if score #g dsgate matches 2 run fill 165 119 113 165 140 113 air
+execute if score #g dsgate matches 3 run fill 165 119 110 165 140 110 air
+execute if score #g dsgate matches 3 run fill 165 119 114 165 140 114 air
+execute if score #g dsgate matches 4 run fill 165 119 109 165 140 109 air
+execute if score #g dsgate matches 4 run fill 165 119 115 165 140 115 air
+execute if score #g dsgate matches 5 run fill 165 119 108 165 140 108 air
+execute if score #g dsgate matches 5 run fill 165 119 116 165 140 116 air
+execute if score #g dsgate matches 6 run fill 165 119 107 165 140 107 air
+execute if score #g dsgate matches 6 run fill 165 119 117 165 140 117 air
+execute if score #g dsgate matches 7 run fill 165 119 106 165 140 106 air
+execute if score #g dsgate matches 7 run fill 165 119 118 165 140 118 air
+execute if score #g dsgate matches 8 run fill 165 119 105 165 140 105 air
+execute if score #g dsgate matches 8 run fill 165 119 119 165 140 119 air
+execute if score #g dsgate matches 9 run fill 165 119 104 165 140 104 air
+execute if score #g dsgate matches 9 run fill 165 119 120 165 140 120 air
+execute if score #g dsgate matches 10 run fill 165 119 103 165 140 103 air
+execute if score #g dsgate matches 10 run fill 165 119 121 165 140 121 air
+execute if score #g dsgate matches 11 run fill 165 119 102 165 140 102 air
+execute if score #g dsgate matches 11 run fill 165 119 122 165 140 122 air
+execute if score #g dsgate matches 12 run fill 165 119 101 165 140 101 air
+execute if score #g dsgate matches 12 run fill 165 119 123 165 140 123 air

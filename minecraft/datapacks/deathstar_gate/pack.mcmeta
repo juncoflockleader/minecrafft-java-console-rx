@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "pack_format": 57,
+    "description": "Death Star hangar gate \u2014 bi-parting blast doors",
+    "supported_formats": {"min_inclusive": 4, "max_inclusive": 9999}
+  }
+}

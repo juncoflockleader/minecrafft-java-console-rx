@@ -69,7 +69,15 @@
           "bay_door": { "face": "+x (toward spawn)", "x": [150, 172], "y": [119, 140], "z": [101, 123] },
           "tp_into_hangar": "120 119 112",
           "tp_outside_door": "168 130 112",
-          "notes": "Gray-concrete deck across the lower third with a domed ceiling. Framed bay-door tunnel through the hull (open to space). Floor light grid, two landing pads, dome lights, and a glass-fronted control booth at the back. A mech is parked on the deck."
+          "notes": "Gray-concrete deck across the lower third with a domed ceiling. Framed bay-door tunnel through the hull (open to space). Floor light grid, two landing pads, dome lights, and a glass-fronted control booth at the back. A mech is parked on the deck.",
+          "gate": {
+            "type": "bi-parting blast doors (iron), animated, no mods",
+            "mechanism": "vanilla datapack 'deathstar_gate' (functions dsgate:*), frame animation on a tick loop",
+            "plane": { "x": 165, "y": [119, 140], "z": [101, 123] },
+            "trigger": "stone pressure plates inside (x162) and outside (x167) the bay; auto-opens on approach from either side, auto-closes ~5s after you leave (won't close while you're standing in it)",
+            "manual": "function dsgate:open  /  function dsgate:close",
+            "source": "minecraft/datapacks/deathstar_gate (deployed to world/datapacks on the mini)"
+          }
         }
       },
       "notes": "Giant hollow iron sphere, ~101 blocks across, 1-block hole-free shell. Floats west of spawn, clear of the castle. tp drops you inside the hollow interior."

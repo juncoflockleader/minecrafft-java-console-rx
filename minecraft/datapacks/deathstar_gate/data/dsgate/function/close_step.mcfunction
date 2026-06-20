@@ -1,0 +1,24 @@
+execute if score #g dsgate matches 12 run fill 165 119 101 165 140 101 iron_block
+execute if score #g dsgate matches 12 run fill 165 119 123 165 140 123 iron_block
+execute if score #g dsgate matches 11 run fill 165 119 102 165 140 102 iron_block
+execute if score #g dsgate matches 11 run fill 165 119 122 165 140 122 iron_block
+execute if score #g dsgate matches 10 run fill 165 119 103 165 140 103 iron_block
+execute if score #g dsgate matches 10 run fill 165 119 121 165 140 121 iron_block
+execute if score #g dsgate matches 9 run fill 165 119 104 165 140 104 iron_block
+execute if score #g dsgate matches 9 run fill 165 119 120 165 140 120 iron_block
+execute if score #g dsgate matches 8 run fill 165 119 105 165 140 105 iron_block
+execute if score #g dsgate matches 8 run fill 165 119 119 165 140 119 iron_block
+execute if score #g dsgate matches 7 run fill 165 119 106 165 140 106 iron_block
+execute if score #g dsgate matches 7 run fill 165 119 118 165 140 118 iron_block
+execute if score #g dsgate matches 6 run fill 165 119 107 165 140 107 iron_block
+execute if score #g dsgate matches 6 run fill 165 119 117 165 140 117 iron_block
+execute if score #g dsgate matches 5 run fill 165 119 108 165 140 108 iron_block
+execute if score #g dsgate matches 5 run fill 165 119 116 165 140 116 iron_block
+execute if score #g dsgate matches 4 run fill 165 119 109 165 140 109 iron_block
+execute if score #g dsgate matches 4 run fill 165 119 115 165 140 115 iron_block
+execute if score #g dsgate matches 3 run fill 165 119 110 165 140 110 iron_block
+execute if score #g dsgate matches 3 run fill 165 119 114 165 140 114 iron_block
+execute if score #g dsgate matches 2 run fill 165 119 111 165 140 111 iron_block
+execute if score #g dsgate matches 2 run fill 165 119 113 165 140 113 iron_block
+execute if score #g dsgate matches 1 run fill 165 119 112 165 140 112 iron_block
+scoreboard players remove #g dsgate 1
