@@ -39,6 +39,10 @@ export const config = {
     port: Number(process.env.MC_PORT || 25565),
   },
   logPath: process.env.MC_LOG_PATH || "",
+  // Folder of client-side jars (fabric-api + our mods) published for players to
+  // sync. Defaults to a `client-mods` folder beside the server install.
+  clientModsDir: process.env.CLIENT_MODS_DIR || (serverDir ? path.join(serverDir, "client-mods") : ""),
+  minecraftVersion: process.env.MC_GAME_VERSION || "1.21.11",
   auth: {
     user: process.env.WEBUI_USER || "",
     password: process.env.WEBUI_PASSWORD || "",

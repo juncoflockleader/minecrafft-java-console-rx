@@ -22,6 +22,7 @@ import { makeWhitelist } from "./whitelist.js";
 import { makeProperties } from "./properties.js";
 import { makeJarManager } from "./jardir.js";
 import { makeLifecycle } from "./lifecycle.js";
+import { makeClientMods } from "./clientmods.js";
 
 validateConfig();
 
@@ -44,6 +45,21 @@ app.post("/api/logout", (req, res) => {
   destroySession(sessionTokenFromReq(req));
   res.setHeader("Set-Cookie", clearCookieHeader());
   res.json({ ok: true });
+});
+
+// --- client-mod sync (PUBLIC, no auth — LAN distribution to players) ---
+const clientMods = makeClientMods(config.clientModsDir, { minecraft: config.minecraftVersion });
+const baseUrl = (req) => `${req.protocol}://${req.get("host")}`;
+app.get("/clientmods", (req, res) => res.type("html").send(clientMods.pageHtml(baseUrl(req))));
+app.get("/clientmods/manifest.json", (_req, res) => res.json(clientMods.manifest()));
+app.get("/clientmods/Update-Mods.ps1", (req, res) => {
+  res.type("text/plain").set("Content-Disposition", 'attachment; filename="Update-Mods.ps1"');
+  res.send(clientMods.updateScript(baseUrl(req)));
+});
+app.get("/clientmods/files/:name", (req, res) => {
+  const p = clientMods.filePath(req.params.name);
+  if (!p) return res.status(404).json({ error: "not found" });
+  res.download(p);
 });
 
 app.use(authGate(config.auth));
