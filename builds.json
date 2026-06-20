@@ -38,6 +38,18 @@
       "bounds": { "x": [194, 196], "y": [66, 70], "z": [110, 114] },
       "tp": "195 67 112",
       "notes": "Spans the west moat at the gate (walk z111-113). Oak-fence railings, lanterns on the posts, and chains rising up the gatehouse front. Stone path leads from spawn onto the bridge."
+    },
+    {
+      "name": "Death Star (exterior shell)",
+      "type": "structure",
+      "material": "iron_block",
+      "created": "2026-06-19",
+      "status": "in-progress: exterior only; superlaser dish + trenches to come",
+      "center": { "x": 120, "y": 140, "z": 112 },
+      "radius": 50,
+      "bounds": { "x": [70, 170], "y": [90, 190], "z": [62, 162] },
+      "tp": "120 140 112",
+      "notes": "Giant hollow iron sphere, ~101 blocks across, 1-block hole-free shell (nearest-integer method, 15726 fill segments). Floats west of spawn, clear of the castle. tp drops you inside the hollow interior."
     }
   ],
   "entities": [
