@@ -49,6 +49,7 @@
       "radius": 50,
       "bounds": { "x": [70, 170], "y": [90, 190], "z": [62, 162] },
       "tp": "120 140 112",
+      "spawn": "Whole-structure respawn via the 'deathstar' datapack (clone-blueprint approach; Java has no /structure save). 'function deathstar:capture' snapshots the live build into a hidden cold-storage copy at x+500; 'function deathstar:spawn' rematerializes it at the ORIGINAL coords (gate uses absolute coords, so v1 is origin-only per Decision B), re-parks the mech, and runs dsgate:install. Tiled into 34 y-slabs of 101x101x3 (<=32768 clone cap); one-tick lag spike on spawn. Verified 2026-06-20: 80/80 air-solid match, marker-revert restore, mech+gate OK.",
       "details": {
         "superlaser_dish": {
           "axis": "up + east (faces spawn)",

@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "description": "Death Star spawn (clone blueprint)",
+    "min_format": [4, 0],
+    "max_format": [9999, 0]
+  }
+}
