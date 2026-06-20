@@ -40,6 +40,23 @@
       "notes": "Spans the west moat at the gate (walk z111-113). Oak-fence railings, lanterns on the posts, and chains rising up the gatehouse front. Stone path leads from spawn onto the bridge."
     },
     {
+      "name": "Looping Rollercoaster",
+      "type": "structure",
+      "material": "rails + red/white concrete",
+      "created": "2026-06-20",
+      "center": { "x": 285, "y": 80, "z": 45 },
+      "bounds": { "x": [261, 309], "y": [62, 104], "z": [29, 61] },
+      "tp": "285 80 60",
+      "script": "minecraft/scripts/coaster.py",
+      "features": [
+        "rideable powered rectangular circuit at y80 (powered_rail straights + curved corners), x265-305 / z33-57",
+        "GIANT decorative vertical loop (radius 12, ~24 tall, two red-concrete rails + white ties) straddling the front straight at z33, on a white A-frame",
+        "themed red/white support pillars on a gray-concrete plaza (ground y62); sea-lantern lighting",
+        "station platform + sign + a minecart on the back straight (z57)"
+      ],
+      "ride_notes": "Vanilla rails can't ride a true vertical loop (the big loop is a showpiece). The circuit IS rideable: a stationary cart on a flat closed loop won't self-launch, so LEFT-CLICK (hit) the cart once to start it, then it circles on the powered track; right-click to board as it passes. (A button-launch spur is a possible upgrade.)"
+    },
+    {
       "name": "Death Star",
       "type": "structure",
       "material": "iron_block",
