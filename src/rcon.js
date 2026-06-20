@@ -29,15 +29,24 @@ function attempt(command, { host, port, password, timeout = 5000 } = {}) {
     const socket = net.createConnection({ host, port });
     let buffer = Buffer.alloc(0);
     let authed = false;
+    let gotResponse = false; // received at least one packet of the command's output
     const parts = [];
     let settled = false;
 
     const timer = setTimeout(() => fail(new Error("RCON timeout")), timeout);
+    // Some Minecraft RCON servers close the socket right after the command's
+    // response without echoing our sentinel; flush shortly after the last packet.
+    let flushTimer = null;
+    const scheduleFlush = () => {
+      clearTimeout(flushTimer);
+      flushTimer = setTimeout(() => done(parts.join("")), 80);
+    };
 
     function done(value) {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
+      clearTimeout(flushTimer);
       socket.destroy();
       resolve(value);
     }
@@ -45,6 +54,7 @@ function attempt(command, { host, port, password, timeout = 5000 } = {}) {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
+      clearTimeout(flushTimer);
       socket.destroy();
       reject(err);
     }
@@ -52,7 +62,10 @@ function attempt(command, { host, port, password, timeout = 5000 } = {}) {
     socket.on("connect", () => socket.write(encode(CMD_ID, TYPE_AUTH, password)));
     socket.on("error", fail);
     socket.on("close", () => {
-      if (!settled) fail(new Error("RCON connection closed unexpectedly"));
+      if (settled) return;
+      // If the command ran and we got its output, a close is success, not failure.
+      if (gotResponse) done(parts.join(""));
+      else fail(new Error("RCON connection closed unexpectedly"));
     });
 
     socket.on("data", (chunk) => {
@@ -70,13 +83,18 @@ function attempt(command, { host, port, password, timeout = 5000 } = {}) {
             if (id === -1) return fail(new Error("RCON auth failed (bad password)"));
             authed = true;
             socket.write(encode(CMD_ID, TYPE_EXEC, command));
-            socket.write(encode(END_ID, TYPE_EXEC, "")); // sentinel
+            // No sentinel packet: Minecraft's RCON treats an empty command as
+            // invalid and may close the socket (sometimes before the real
+            // response). Minecraft returns each command's output in one packet,
+            // so we resolve via the flush debounce / close-with-response below.
           }
           continue;
         }
         if (type === TYPE_RESPONSE) {
-          if (id === END_ID) return done(parts.join(""));
+          if (id === END_ID) return done(parts.join("")); // clean sentinel echo
           parts.push(body);
+          gotResponse = true;
+          scheduleFlush();
         }
       }
     });
