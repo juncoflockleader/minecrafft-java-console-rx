@@ -92,7 +92,7 @@
           "room_access": "each named room is reached DIRECTLY from the ladder foyer (DoorA) and is never lost in the maze; DoorB is the only way onward into the maze. Built by minecraft/scripts/ds_rooms.py (additive, bounded).",
           "decks": {
             "y104": "Command Center — andesite floor, big screen wall (black + light-blue/cyan panels), console banks (levers + redstone lamps), command chairs",
-            "y110": "Living Room — brown carpet, L-shaped couch, coffee table, bookshelves, wall TV, plants, hanging lanterns",
+            "y110": "Living quarters hub — off the ladder room: Living Room (west), GAMING ROOM (east: arcade/jukebox/note-blocks, screen wall, table, seats), BARRACKS (south: bunk rows + footlockers), KITCHEN+CAFE (south-east: counter w/ smoker/furnace/cauldron, bistro tables). Built additively by ds_living.py; the east corridor's backing column re-holds the elevator ladder (do not carve x121,z112).",
             "y118": "Cafe + kitchen — counter with smoker/furnace/cauldron/barrels, bistro tables with chairs; same deck as the hangar bulkhead access",
             "y126": "Restrooms — quartz/glazed-terracotta, stalls with doors + cauldron toilets, sink counter + glass mirrors",
             "y134": "Conference Room — long blackstone boardroom table, chairs both sides + head chair, blue holo screen wall",
