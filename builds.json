@@ -61,7 +61,16 @@
           "depth": 4,
           "notes": "Recessed channel around the whole sphere at the equator; gray-concrete back wall, iron rim shelves."
         },
-        "hull_paneling": "10 light-gray latitude seam rings (iron recoloured) for the paneled look"
+        "hull_paneling": "10 light-gray latitude seam rings (iron recoloured) for the paneled look",
+        "hangar": {
+          "deck_y": 118,
+          "deck_radius": 44,
+          "deck_center": { "x": 120, "y": 118, "z": 112 },
+          "bay_door": { "face": "+x (toward spawn)", "x": [150, 172], "y": [119, 140], "z": [101, 123] },
+          "tp_into_hangar": "120 119 112",
+          "tp_outside_door": "168 130 112",
+          "notes": "Gray-concrete deck across the lower third with a domed ceiling. Framed bay-door tunnel through the hull (open to space). Floor light grid, two landing pads, dome lights, and a glass-fronted control booth at the back. A mech is parked on the deck."
+        }
       },
       "notes": "Giant hollow iron sphere, ~101 blocks across, 1-block hole-free shell. Floats west of spawn, clear of the castle. tp drops you inside the hollow interior."
     }
