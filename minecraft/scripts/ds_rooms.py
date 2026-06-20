@@ -41,85 +41,86 @@ CEIL = "smooth_quartz"
 
 # ---------------- per-room furnishing ----------------
 def f_command(fy, cy):  # COMMAND CENTER
+    g = fy + 1                                               # ground (on top of the floor)
     fill(101, fy, 106, 113, fy, 118, "polished_andesite")
     # big screen wall on the north interior wall
-    fill(101, fy + 1, 106, 113, fy + 3, 106, "black_concrete")
-    for x in range(102, 113, 2): sb(x, fy + 2, 106, "light_blue_concrete")
-    sb(107, fy + 2, 106, "cyan_concrete")
+    fill(101, g, 106, 113, g + 2, 106, "black_concrete")
+    for x in range(102, 113, 2): sb(x, g + 1, 106, "light_blue_concrete")
+    sb(107, g + 1, 106, "cyan_concrete")
     # console banks facing the screen
     for cz in (109, 111):
         for cx in range(103, 112, 2):
-            sb(cx, fy, cz, "redstone_lamp[lit=true]"); sb(cx, fy + 1, cz, "lever[face=floor]")
+            sb(cx, g, cz, "redstone_lamp[lit=true]"); sb(cx, g + 1, cz, "lever[face=floor]")
     # command chairs at the back
-    for cx in (105, 109): sb(cx, fy, 115, "polished_blackstone_stairs[facing=north]")
+    for cx in (105, 109): sb(cx, g, 115, "polished_blackstone_stairs[facing=north]")
 
 def f_living(fy, cy):  # LIVING ROOM
-    fill(101, fy, 106, 113, fy, 118, "brown_wool")           # carpet
+    g = fy + 1
+    fill(101, fy, 106, 113, fy, 118, "brown_wool")           # carpet (the floor)
     # couch (L-shape) of stairs + wool backs
-    for x in range(103, 110): sb(x, fy, 116, "red_wool")
-    for x in range(103, 110): sb(x, fy, 115, "oak_stairs[facing=north]")
-    for z in range(112, 116): sb(103, fy, z, "oak_stairs[facing=west]")
-    # coffee table + rug centre
-    sb(106, fy, 113, "oak_pressure_plate"); sb(106, fy, 113, "spruce_slab[type=top]")
+    for x in range(103, 110): sb(x, g, 116, "red_wool")
+    for x in range(103, 110): sb(x, g, 115, "oak_stairs[facing=north]")
+    for z in range(112, 116): sb(103, g, z, "oak_stairs[facing=west]")
+    # coffee table
+    sb(106, g, 113, "spruce_fence"); sb(106, g + 1, 113, "spruce_slab[type=bottom]")
     # bookshelves + a "TV" on the wall + plants
-    fill(110, fy, 107, 112, fy + 2, 107, "bookshelf")
-    fill(104, fy + 1, 106, 108, fy + 2, 106, "black_concrete")  # tv
-    sb(106, fy + 1, 106, "blue_concrete")
-    sb(102, fy, 117, "flower_pot"); sb(112, fy, 117, "flower_pot")
+    fill(110, g, 107, 112, g + 2, 107, "bookshelf")
+    fill(104, g + 1, 106, 108, g + 2, 106, "black_concrete")  # tv
+    sb(106, g + 1, 106, "blue_concrete")
+    sb(102, g, 117, "flower_pot"); sb(112, g, 117, "flower_pot")
     for lz in (110, 116): sb(106, cy - 1, lz, "lantern[hanging=true]")
 
 def f_cafe(fy, cy):  # CAFE + kitchen
+    g = fy + 1
     fill(101, fy, 106, 113, fy, 118, "smooth_stone")
-    # kitchen counter along the north wall
+    # kitchen counter along the north wall (waist-high) with appliances on top
     for x in range(102, 113):
-        sb(x, fy, 107, "smooth_stone_slab[type=double]")
-    sb(103, fy + 1, 107, "smoker[facing=south]"); sb(105, fy + 1, 107, "furnace[facing=south]")
-    sb(107, fy, 107, "cauldron"); sb(109, fy + 1, 107, "barrel"); sb(111, fy + 1, 107, "barrel")
-    # bistro tables (fence + pressure plate) with chairs
+        sb(x, g, 107, "smooth_stone_slab[type=double]")
+    sb(103, g + 1, 107, "smoker[facing=south]"); sb(105, g + 1, 107, "furnace[facing=south]")
+    sb(107, g, 107, "cauldron"); sb(109, g + 1, 107, "barrel"); sb(111, g + 1, 107, "barrel")
+    # bistro tables (fence + carpet top) with chairs
     for tx in (104, 108, 112):
         for tz in (112, 116):
-            sb(tx, fy, tz, "oak_fence"); sb(tx, fy + 1, tz, "oak_pressure_plate")
-            sb(tx - 1, fy, tz, "spruce_stairs[facing=east]"); sb(tx + 1, fy, tz, "spruce_stairs[facing=west]")
+            sb(tx, g, tz, "oak_fence"); sb(tx, g + 1, tz, "white_carpet")
+            sb(tx - 1, g, tz, "spruce_stairs[facing=east]"); sb(tx + 1, g, tz, "spruce_stairs[facing=west]")
 
 def f_restroom(fy, cy):  # RESTROOMS
+    g = fy + 1
     fill(101, fy, 106, 113, fy, 118, "white_glazed_terracotta")
-    fill(101, fy + 1, 106, 113, cy - 1, 118, "air")
+    fill(101, g, 106, 113, cy - 1, 118, "air")
     # stalls along the south wall: partitions + doors
     for sx in (103, 106, 109, 112):
-        fill(sx, fy + 1, 115, sx, fy + 2, 118, "quartz_block")
-        sb(sx, fy, 117, "cauldron")  # toilet
-    sb(105, fy, 117, "spruce_door[facing=north,half=lower]"); sb(105, fy + 1, 117, "spruce_door[facing=north,half=upper]")
-    sb(108, fy, 117, "spruce_door[facing=north,half=lower]"); sb(108, fy + 1, 117, "spruce_door[facing=north,half=upper]")
+        fill(sx, g, 115, sx, g + 2, 118, "quartz_block")
+        sb(sx, g, 117, "cauldron")  # toilet
+    sb(105, g, 117, "spruce_door[facing=north,half=lower]"); sb(105, g + 1, 117, "spruce_door[facing=north,half=upper]")
+    sb(108, g, 117, "spruce_door[facing=north,half=lower]"); sb(108, g + 1, 117, "spruce_door[facing=north,half=upper]")
     # sink counter + mirrors on the north wall
     for x in range(102, 113, 2):
-        sb(x, fy + 1, 106, "cauldron[level=1]"); sb(x, fy + 2, 106, "glass")
-    fill(101, fy + 1, 106, 113, fy + 1, 106, "quartz_slab[type=top]")
+        sb(x, g, 106, "cauldron[level=1]"); sb(x, g + 1, 106, "glass")
 
 def f_conf(fy, cy):  # CONFERENCE ROOM
+    g = fy + 1
     fill(101, fy, 106, 113, fy, 118, "polished_andesite")
-    # long boardroom table down the middle
-    fill(104, fy, 110, 110, fy, 114, "polished_blackstone")
-    fill(104, fy + 1, 110, 110, fy + 1, 114, "polished_blackstone_slab[type=bottom]")
+    # long boardroom table down the middle (waist-high)
+    fill(104, g, 110, 110, g, 114, "polished_blackstone")
+    fill(104, g + 1, 110, 110, g + 1, 114, "polished_blackstone_slab[type=bottom]")
     # chairs both sides + head chair
     for tx in range(104, 111, 2):
-        sb(tx, fy, 109, "dark_oak_stairs[facing=south]")
-        sb(tx, fy, 115, "dark_oak_stairs[facing=north]")
-    sb(107, fy, 117, "dark_oak_stairs[facing=north]")  # head of table (Vader chair)
+        sb(tx, g, 109, "dark_oak_stairs[facing=south]")
+        sb(tx, g, 115, "dark_oak_stairs[facing=north]")
+    sb(107, g, 117, "dark_oak_stairs[facing=north]")  # head of table (Vader chair)
     # holo screen wall (north)
-    fill(101, fy + 1, 106, 113, fy + 3, 106, "black_concrete")
-    for x in range(102, 113, 2): sb(x, fy + 2, 106, "light_blue_concrete")
+    fill(101, g, 106, 113, g + 2, 106, "black_concrete")
+    for x in range(102, 113, 2): sb(x, g + 1, 106, "light_blue_concrete")
 
-def f_pool(fy, cy):  # SWIMMING POOL
-    # recessed basin
-    fill(102, fy, 108, 112, fy, 116, "prismarine_bricks")
-    fill(103, fy, 109, 111, fy, 115, "water")
+def f_pool(fy, cy):  # SWIMMING POOL  (basin handled by ds_pool_fix.py; deck trim here)
+    g = fy + 1
     # prismarine deck edge + lanterns
     fill(101, fy, 106, 113, fy, 107, "dark_prismarine")
     fill(101, fy, 117, 113, fy, 118, "dark_prismarine")
     for lz in (110, 114): sb(106, cy - 1, lz, "sea_lantern")
-    # ladder out of the pool + a couple of loungers
-    sb(103, fy, 109, "ladder[facing=east]"); sb(103, fy + 1, 109, "ladder[facing=east]")
-    sb(102, fy, 117, "quartz_stairs[facing=south]"); sb(112, fy, 117, "quartz_stairs[facing=south]")
+    # loungers on the deck
+    sb(102, g, 117, "quartz_stairs[facing=south]"); sb(112, g, 117, "quartz_stairs[facing=south]")
 
 DECKS = [
     (104, 110, "COMMAND CENTER", f_command),
