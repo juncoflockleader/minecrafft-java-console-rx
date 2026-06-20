@@ -88,6 +88,7 @@
           "layout": "every deck is enclosed and built out as a confusing corridor MAZE (recursive-backtracker, 2-wide passages, ~3200 cells total). The elevator + spiral cores are kept clear; each deck has one gated chamber (auto iron-door + sign) named for its facility.",
           "theme": "BACKROOMS — mustard-yellow walls + floor (yellow_terracotta), off-white dropped ceiling with flush fluorescent panels (sea_lantern). Reskinned via replace-filters so doors/signs/pool/elevator survive.",
           "spiral_landings": "radius-4 landing rings added at each deck level so you can step off the spiral onto the deck without falling into the well (treads are at radius 3, untouched).",
+          "room_access": "each deck's named facility room opens DIRECTLY off the elevator/ladder foyer via a west auto iron-door (so it's never lost in the maze); a second auto-door leads from the room into the maze.",
           "decks": {
             "y104": "Armory — smithing line, weapon lockers (barrels), armor stands, munitions",
             "y110": "Barracks — bunk rows, footlockers, lanterns",
