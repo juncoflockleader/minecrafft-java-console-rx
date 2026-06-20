@@ -9,7 +9,7 @@ Additive + bounded: builds enclosed room boxes away from the ladder, then
 carves short corridors from the existing ladder pocket to each (auto iron
 doors). The ladder column at (120,112) is never touched.
 """
-import socket, struct
+import socket, struct, sys
 HOST, PORT, PW = "127.0.0.1", 25575, "GU+bvxeYn7dnS7qY"
 s = socket.create_connection((HOST, PORT), timeout=30); _id = 0
 def raw(t, b):
@@ -30,7 +30,10 @@ def sb(x, y, z, bl): return cmd(f"setblock {x} {y} {z} {bl}")
 def sign(x, y, z, face, txt):
     sb(x, y, z, f"oak_wall_sign[facing={face}]{{front_text:{{messages:['\"{txt}\"','\"\"','\"\"','\"\"']}}}}")
 
-FY, CY = 110, 118
+# floor (deck) -> ceiling (next deck's floor). Pass the floor as argv[1].
+DECK_CEIL = {104: 110, 110: 118, 118: 126, 126: 134, 134: 142, 142: 148}
+FY = int(sys.argv[1]) if len(sys.argv) > 1 else 110
+CY = DECK_CEIL[FY]
 YLO, YHI = FY + 1, CY - 1
 WALL, FLOOR, CEIL = "white_concrete", "light_gray_concrete", "smooth_quartz"
 
@@ -117,8 +120,9 @@ sign(128, YLO + 2, 120, "north", "KITCHEN + CAFE")
 
 cmd("forceload remove all")
 cmd("gamerule logAdminCommands true"); cmd("gamerule sendCommandFeedback true")
-print("LIVING FACILITIES DONE (y110)")
-print("gaming door (126,111,112):", cmd("execute if block 126 111 112 minecraft:iron_door"))
-print("barracks door (120,111,120):", cmd("execute if block 120 111 120 minecraft:iron_door"))
-print("kitchen door (130,111,120):", cmd("execute if block 130 111 120 minecraft:iron_door"))
-print("gaming corridor open (123,111,112):", cmd("execute if block 123 111 112 minecraft:air"))
+print(f"LIVING FACILITIES DONE (y{FY})")
+print("gaming door:", cmd(f"execute if block 126 {YLO} 112 minecraft:iron_door"))
+print("barracks door:", cmd(f"execute if block 120 {YLO} 120 minecraft:iron_door"))
+print("kitchen door:", cmd(f"execute if block 130 {YLO} 120 minecraft:iron_door"))
+print("ladder restored:", cmd(f"execute if block 120 {YLO} 112 minecraft:ladder"),
+      cmd(f"execute if block 120 {YLO+1} 112 minecraft:ladder"))
