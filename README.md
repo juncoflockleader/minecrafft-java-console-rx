@@ -12,7 +12,7 @@ A lightweight web UI to control a **Minecraft Java** server (Paper / Spigot / Va
 - **Settings editor** — edit common `server.properties` keys (difficulty, gamemode, view-distance, PvP, …) with friendly controls.
 - **Mod manager** — same install/manage flow for Fabric/Forge **mods**, activated when the server has a `mods/` directory (or `MC_MODS_DIR` is set). On a Paper/Bukkit server the Mods tab explains that the server uses plugins instead.
 - **Lifecycle buttons** — operator-configured **Start / Stop / Restart**. The Start button appears when the server is offline (launch it from the browser); Restart/Stop appear when it's running.
-- **Optional HTTP Basic Auth** — gate the UI (and the WebSocket) behind a username/password.
+- **Login page** — a form-based sign-in (session cookie) gates the UI, the API, and the WebSocket. Enabled when credentials are set.
 
 > **Plugins vs mods:** Paper/Spigot/Bukkit servers load **plugins**; Fabric/Forge servers load **mods**. They are not interchangeable. This tool manages plugins by default and unlocks the Mods panel only on a modded server.
 
@@ -55,12 +55,13 @@ Open the printed URL (default `http://127.0.0.1:8765`).
 | `MC_START_COMMAND` | _(empty)_ | Shell command the "Start" button runs (e.g. `sudo launchctl bootstrap system /Library/LaunchDaemons/com.junco.minecraft.plist`) |
 | `MC_STOP_COMMAND` | _(empty)_ | Shell command the "Stop" button runs (e.g. `sudo launchctl bootout …`) |
 | `MC_RESTART_COMMAND` | _(empty)_ | Shell command the "Restart" button runs (e.g. `sudo launchctl kickstart -k system/com.junco.minecraft`) |
-| `WEBUI_USER` / `WEBUI_PASSWORD` | _(empty)_ | Enable Basic Auth when both set |
+| `WEBUI_USER` / `WEBUI_PASSWORD` | _(empty)_ | Login credentials; when both set, the login page is required |
 
 > **Tip:** run this *on the same host* as the Minecraft server so it can reach RCON over `127.0.0.1` and read the local log file. If you expose the UI beyond localhost (`HOST=0.0.0.0`), set `WEBUI_USER`/`WEBUI_PASSWORD`.
 
 ## HTTP / WebSocket API
 
+- `POST /api/login` `{ user, password }` → sets a session cookie · `POST /api/logout`
 - `GET /api/status` → `{ online, version, protocol, players:{online,max}, motd }`
 - `GET /api/capabilities` → which panels are available + detected `version`/`gameVersion`
 - `POST /api/command` `{ "command": "list" }` → `{ command, response }`

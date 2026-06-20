@@ -135,6 +135,11 @@ body {
 .restart-btn:hover { background: #8a6d2a; }
 .stop-btn { background: #6b2330; border: 1px solid #87303f; }
 .stop-btn:hover { background: #87303f; }
+.logout-btn {
+  background: var(--panel-2); color: var(--muted); border: 1px solid var(--border);
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; cursor: pointer;
+}
+.logout-btn:hover { color: var(--text); border-color: var(--accent-dim); }
 
 /* ---- tabs ---- */
 .tabs {

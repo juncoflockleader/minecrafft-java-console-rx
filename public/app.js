@@ -7,6 +7,10 @@ const esc = (s) =>
 
 async function api(path, opts = {}) {
   const res = await fetch(path, { headers: { "content-type": "application/json" }, ...opts });
+  if (res.status === 401) {
+    location.href = "/login.html";
+    throw new Error("not authenticated");
+  }
   let data = null;
   try { data = await res.json(); } catch {}
   if (!res.ok) throw new Error(data?.error || `HTTP ${res.status}`);
@@ -376,6 +380,11 @@ function activateTab(tab) {
   document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("active", p.id === "panel-" + tab));
   if (onOpen[tab]) onOpen[tab]();
 }
+
+document.getElementById("logout-btn").onclick = async () => {
+  try { await fetch("/api/logout", { method: "POST" }); } catch {}
+  location.href = "/login.html";
+};
 
 // ===== boot =====
 connect();

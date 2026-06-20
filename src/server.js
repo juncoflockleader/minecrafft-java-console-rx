@@ -8,7 +8,16 @@ import { config, validateConfig } from "./config.js";
 import { rconCommand } from "./rcon.js";
 import { LogTailer } from "./logtail.js";
 import { pingStatus } from "./status.js";
-import { basicAuth, wsAuthorized } from "./auth.js";
+import {
+  authGate,
+  wsAuthorized,
+  verifyCredentials,
+  createSession,
+  destroySession,
+  sessionTokenFromReq,
+  sessionCookieHeader,
+  clearCookieHeader,
+} from "./auth.js";
 import { makeWhitelist } from "./whitelist.js";
 import { makeProperties } from "./properties.js";
 import { makeJarManager } from "./jardir.js";
@@ -21,7 +30,23 @@ const publicDir = path.join(__dirname, "..", "public");
 
 const app = express();
 app.use(express.json({ limit: "64kb" }));
-app.use(basicAuth(config.auth));
+
+// --- auth: form login -> session cookie ---
+app.post("/api/login", (req, res) => {
+  const { user, password } = req.body || {};
+  if (verifyCredentials(user, password, config.auth)) {
+    res.setHeader("Set-Cookie", sessionCookieHeader(createSession()));
+    return res.json({ ok: true });
+  }
+  res.status(401).json({ error: "invalid credentials" });
+});
+app.post("/api/logout", (req, res) => {
+  destroySession(sessionTokenFromReq(req));
+  res.setHeader("Set-Cookie", clearCookieHeader());
+  res.json({ ok: true });
+});
+
+app.use(authGate(config.auth));
 app.use(express.static(publicDir));
 
 // Run a single RCON command.
@@ -153,7 +178,7 @@ const tailer = new LogTailer(config.logPath).start();
 server.on("upgrade", (req, socket, head) => {
   if (req.url.split("?")[0] !== "/ws") return socket.destroy();
   if (!wsAuthorized(req, config.auth)) {
-    socket.write("HTTP/1.1 401 Unauthorized\r\nWWW-Authenticate: Basic realm=\"minecrafft-console\"\r\n\r\n");
+    socket.write("HTTP/1.1 401 Unauthorized\r\n\r\n");
     return socket.destroy();
   }
   wss.handleUpgrade(req, socket, head, (ws) => wss.emit("connection", ws, req));

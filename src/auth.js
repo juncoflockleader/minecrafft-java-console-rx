@@ -1,29 +1,14 @@
 import crypto from "node:crypto";
 
-// Constant-time credential comparison.
+// In-memory session store (cleared on restart -> users re-login).
+const sessions = new Set();
+
 function safeEqual(a, b) {
+  if (typeof a !== "string" || typeof b !== "string") return false;
   const ab = Buffer.from(a);
   const bb = Buffer.from(b);
   if (ab.length !== bb.length) return false;
   return crypto.timingSafeEqual(ab, bb);
-}
-
-function check(authHeader, user, password) {
-  if (!authHeader?.startsWith("Basic ")) return false;
-  let decoded;
-  try {
-    decoded = Buffer.from(authHeader.slice(6), "base64").toString("utf8");
-  } catch {
-    return false;
-  }
-  const idx = decoded.indexOf(":");
-  if (idx === -1) return false;
-  return safeEqual(decoded.slice(0, idx), user) && safeEqual(decoded.slice(idx + 1), password);
-}
-
-// Stable per-credential token (survives restarts; never the raw password).
-function authToken(user, password) {
-  return crypto.createHash("sha256").update(`${user}:${password}`).digest("hex");
 }
 
 function cookieValue(req, name) {
@@ -36,27 +21,53 @@ function cookieValue(req, name) {
   return "";
 }
 
-// Express middleware. No-op when auth is not configured. On success it sets an
-// auth cookie so the (header-less) browser WebSocket handshake can authenticate.
-export function basicAuth({ user, password }) {
-  if (!user || !password) return (_req, _res, next) => next();
-  const token = authToken(user, password);
+export function authConfigured({ user, password }) {
+  return Boolean(user && password);
+}
+
+export function verifyCredentials(user, password, creds) {
+  return safeEqual(user, creds.user) && safeEqual(password, creds.password);
+}
+
+export function createSession() {
+  const token = crypto.randomBytes(24).toString("hex");
+  sessions.add(token);
+  return token;
+}
+
+export function sessionTokenFromReq(req) {
+  return cookieValue(req, "mcsession");
+}
+
+export function destroySession(token) {
+  if (token) sessions.delete(token);
+}
+
+const COOKIE_BASE = "mcsession=%; HttpOnly; SameSite=Strict; Path=/";
+export const sessionCookieHeader = (token) => COOKIE_BASE.replace("%", token) + "; Max-Age=604800";
+export const clearCookieHeader = () => COOKIE_BASE.replace("%", "") + "; Max-Age=0";
+
+function isAuthed(req) {
+  const token = sessionTokenFromReq(req);
+  return Boolean(token) && sessions.has(token);
+}
+
+// Paths reachable without a session (the login page + the login endpoint).
+const PUBLIC_PATHS = new Set(["/login.html", "/login.css", "/api/login"]);
+
+// Express middleware. No-op when auth isn't configured. Unauthenticated API
+// calls get 401; unauthenticated page loads are redirected to the login page.
+export function authGate(creds) {
+  if (!authConfigured(creds)) return (_req, _res, next) => next();
   return (req, res, next) => {
-    if (check(req.headers.authorization, user, password)) {
-      res.setHeader("Set-Cookie", `mcconsole=${token}; HttpOnly; SameSite=Strict; Path=/`);
-      return next();
-    }
-    res.set("WWW-Authenticate", 'Basic realm="minecrafft-console"');
-    res.status(401).send("Authentication required.");
+    if (PUBLIC_PATHS.has(req.path) || isAuthed(req)) return next();
+    if (req.path.startsWith("/api/")) return res.status(401).json({ error: "not authenticated" });
+    return res.redirect("/login.html");
   };
 }
 
-// Validate a WebSocket upgrade: accept either the Authorization header (API
-// clients) or the auth cookie set after a Basic-Auth page load (browsers).
-export function wsAuthorized(req, { user, password }) {
-  if (!user || !password) return true;
-  if (check(req.headers.authorization, user, password)) return true;
-  const token = authToken(user, password);
-  const cookie = cookieValue(req, "mcconsole");
-  return cookie.length === token.length && safeEqual(cookie, token);
+// WebSocket upgrade auth: session cookie only (browsers send it on the handshake).
+export function wsAuthorized(req, creds) {
+  if (!authConfigured(creds)) return true;
+  return isAuthed(req);
 }
