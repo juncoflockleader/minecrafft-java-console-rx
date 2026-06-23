@@ -27,10 +27,11 @@ cmd("forceload add 194 158 218 213")
 
 BX0, BX1, BZ0, BZ1 = 199, 215, 165, 177
 # ---- level the yard + a lawn strip back to the castle wall (keeps it off the z160 wall) ----
+# NB: stop at z177, NOT z178 — z178 is the house's north wall; clearing it erases the back wall.
 for y in range(67, 73):
-    fill(197, y, 161, 217, y, 178, "air")
-fill(197, 61, 161, 217, 65, 178, "stone")
-fill(197, 66, 161, 217, 66, 178, "grass_block")
+    fill(197, y, 161, 217, y, 177, "air")
+fill(197, 61, 161, 217, 65, 177, "stone")
+fill(197, 66, 161, 217, 66, 177, "grass_block")
 
 # ---- back door through the house north wall ----
 fill(206, 67, 178, 207, 69, 178, "air"); door(206, 67, 178, "spruce_door", "north"); door(207, 67, 178, "spruce_door", "north")
