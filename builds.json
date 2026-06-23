@@ -15,17 +15,18 @@
       "bounds": { "x": [200, 264], "y": [66, 90], "z": [100, 142] },
       "floorY": 66,
       "tp": "232 67 102",
-      "scripts": ["minecraft/scripts/castle_shell.py", "minecraft/scripts/castle_interior.py", "minecraft/scripts/castle_floor2.py"],
-      "status": "first + second floor done (master bedrooms); fully torch-lit. Basement TBD.",
+      "scripts": ["minecraft/scripts/castle_shell.py", "minecraft/scripts/castle_interior.py", "minecraft/scripts/castle_floor2.py", "minecraft/scripts/castle_grounds.py"],
+      "status": "first + second floor done (master bedrooms), fully torch-lit, AND walled grounds (curtain wall + 4 watchtowers + gatehouse + courtyard + giant king statue). Basement TBD.",
       "layout": {
         "main_hall": "central, x224-240 z100-142, TWO STORIES (y67-82). Iron throne (iron_block + lightning-rod sword spikes + iron_bars) on a blackstone dais at the north (z138-141) under a big stained-glass window; clerestory stained glass high on the E/W walls; chiseled-stone columns w/ lanterns; red-carpet runner; chandeliers; grand dark-oak entrance (south z100); two grand staircases up to the 2nd-floor balconies (y75).",
         "west_wing": "1 story (y67-74), x200-224: BALLROOM (front, quartz floor + chandeliers + musicians' dais), BARRACKS, ARMORY (anvil/smithing/armor stands), restroom (WC). Door from the hall at x224 z118.",
         "east_wing": "1 story, x240-264: DINING HALL (front, long table + chairs + chandeliers), KITCHEN (smoker/furnace/counters), SERVANT QUARTERS, STORAGE, restroom (WC). Door from the hall at x240 z118.",
         "second_floor": "over both wings, floor y75 / walls y76-82 / deepslate roof y83 with parapets. LORDS CHAMBER (west, x201-223) and LADYS CHAMBER (east, x241-263): each a master suite with a four-poster canopy bed, brick fireplace (campfire), wardrobe/bookshelf, rug, hanging lantern, glass windows, wall torches. Reached via the grand stairs onto two balconies (x225-226 / x238-239) that overlook the great hall (iron-bar railings), then spruce doors through x224/x240 at z119.",
         "towers": "4 battlemented corner towers (7x7) to y88, with arrow slits",
-        "lighting": "wall torches throughout every 1st- and 2nd-floor room + towers (hall lit at two heights) so the whole interior is illuminated / mob-free"
+        "lighting": "wall torches throughout every 1st- and 2nd-floor room + towers (hall lit at two heights) so the whole interior is illuminated / mob-free",
+        "grounds": "Expanded+leveled plot (filled to y66 grass) enclosed by a CURTAIN WALL: outer faces S z70 / N z160 / W x170 / E x294, 6 blocks thick = a 4-wide wall-walk (y74) with crenellated battlements. GATEHOUSE on the south/castle axis (twin piers x224-228 & x236-240 to y82, archway passage x229-235 with raised iron-bar portcullis + lantern, wall-walk bridges over it). 4 WATCHTOWERS (9x9, y67-85) on the wall corners, each with a ground-level spruce door into the courtyard, the wall-walk passing in at y74 (wall-level entrance), an internal ladder, and a battlemented lookout roof. COURTYARD: polished-andesite approach paths framing the centerpiece, a fenced TRAINING YARD (coarse dirt, 6 armor-stand dummies in iron armor + hay/target backstops) in the east front, and 8 oak trees. GIANT KING STATUE centerpiece (smooth-quartz marble, ~32 tall) on a stone pedestal at x226-238 z80-90 facing the gate: robe, cape, gold belt/crown with red jewels, a glowing end-rod scepter + orb."
       },
-      "tps": { "throne": "232 67 139", "ballroom": "212 67 112", "dining": "252 67 112", "lords_chamber": "212 76 112", "ladys_chamber": "252 76 112" }
+      "tps": { "throne": "232 67 139", "ballroom": "212 67 112", "dining": "252 67 112", "lords_chamber": "212 76 112", "ladys_chamber": "252 76 112", "gate": "232 67 73", "statue": "232 67 76", "training_yard": "267 67 87", "sw_watchtower": "174 67 74" }
     },
     {
       "name": "Looping Rollercoaster",
