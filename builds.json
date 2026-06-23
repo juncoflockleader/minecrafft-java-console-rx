@@ -69,9 +69,10 @@
       "type": "structure",
       "material": "white_terracotta + spruce timber (Tudor)",
       "created": "2026-06-22",
-      "script": "minecraft/scripts/family_house.py",
+      "scripts": ["minecraft/scripts/family_house.py", "minecraft/scripts/house_garden.py"],
       "bounds": { "x": [199, 215], "y": [60, 92], "z": [178, 194] },
       "tp": "207 67 192",
+      "garden": "Fenced front yard (south, x199-215 z195-209; spruce fence, south gate on the door axis, gravel+dirt-path walk to the front door). West = vegetable patch (hydrated farmland w/ grown wheat/carrots/potatoes/beetroot + a scarecrow). East = flower garden with a cherry tree (bee nest + 2 bees), a small pond w/ lily pads & sugar cane, scattered flowers, a bench and berry bushes. Lantern lamp posts.",
       "note": "Built at player P_____L's location (~202,66,191), in the leveled district just west of the Grand Tower. 17x17 footprint, glass windows w/ timber mullions, gabled dark-oak roof + brick chimney. A 2-wide spruce staircase links every level (NW corner up; a 2nd flight by the east wall goes down to the basement).",
       "levels": {
         "basement (y60)": "TREASURE VAULT: 6 auto-filling loot chests (buried_treasure, simple_dungeon, end_city_treasure, woodland_mansion, stronghold_corridor), a gold/emerald/diamond/amethyst hoard, an enchanting nook w/ bookshelves + anvil + brewing stand, a barrel wine cellar, cobwebs, lanterns.",
