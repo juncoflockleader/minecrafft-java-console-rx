@@ -50,6 +50,20 @@
       "tps": { "arch": "232 67 40", "well": "232 67 43", "tavern": "251 67 47", "fortunes": "211 67 45", "stage": "251 68 62", "pen": "193 67 55" }
     },
     {
+      "name": "Grand Tower (apartments)",
+      "type": "structure",
+      "material": "light_gray_concrete + light_blue glass curtain wall",
+      "created": "2026-06-22",
+      "script": "minecraft/scripts/apartment_tower.py",
+      "bounds": { "x": [216, 248], "y": [66, 319], "z": [199, 231] },
+      "footprint": "33x33, centered x232 z215, on a leveled district north of the castle (x198-266 z165-253). ~250 blocks tall (y66 base slab -> y316 roof), near the y319 build limit.",
+      "tp": "232 67 199",
+      "design": "ONE repeated floor blueprint stacked 50x (floor height 5: slab + 4 interior). Each floor = 4 big apartments (red/blue/lime/yellow beds + carpet + kitchenette) around a cross-corridor, with oak doors, hanging-lantern lighting (no mob spawns), and a full glass curtain wall with concrete mullions. Floor f slab at y=66+5f.",
+      "elevator": "2x2 SCAFFOLDING express shaft at x232-233 z215-216, ground (y67) to roof (y316). Climb: hold jump to go up, sneak to descend. Each floor slab has a 2x2 hole for it (ground floor solid).",
+      "extras": "Ground LOBBY with entrance doors + 'GRAND TOWER / 50 FLOORS' sign on the south wall (z199); rooftop deck with parapet + sea-lantern lights + a tall iron-bar antenna mast topped with a light at y319.",
+      "note": "Built programmatically over RCON in ~1.2s. To change height: edit NFLOORS. To climb faster than scaffolding, a soul-sand/water bubble elevator could replace the shaft."
+    },
+    {
       "name": "Castle Guards (datapack)",
       "type": "system",
       "datapack": "minecraft/datapacks/guards  (deployed to ~/minecraft-fabric/world/datapacks/guards on the mini)",
