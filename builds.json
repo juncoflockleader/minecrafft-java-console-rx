@@ -69,9 +69,12 @@
       "type": "structure",
       "material": "white_terracotta + spruce timber (Tudor)",
       "created": "2026-06-22",
-      "scripts": ["minecraft/scripts/family_house.py", "minecraft/scripts/house_garden.py"],
+      "scripts": ["minecraft/scripts/family_house.py", "minecraft/scripts/house_garden.py", "minecraft/scripts/house_backyard.py"],
       "bounds": { "x": [199, 215], "y": [60, 92], "z": [178, 194] },
       "tp": "207 67 192",
+      "backyard": "Fenced yard NORTH of the house (x199-215 z165-177) reached by a new back door (z178): polished-andesite patio w/ table+chairs and a BBQ, a campfire fire pit w/ log-stump seats, a kids' play corner (sandbox + an A-frame swing), a doghouse with a dog named Rex, a garden shed (chest/tools), an oak tree, flowers and lantern lamp posts. North gate opens onto a leveled lawn strip toward the castle.",
+      "mailbox": "Curbside by the front gate (x208 z210): spruce post + barrel bin + a red-banner flag + an address sign, on a gravel curb.",
+      "GOTCHA": "This server has NO minecraft:chain block (setblock 'chain' errors 'Unknown block type'). Use iron_bars for ropes/hangers. Lanterns placed floating (expecting a chain above) have no support and pop on a block update — give them lantern[hanging=true] under a ceiling or a post below. Some older chandelier lanterns (castle/house/fair) may be missing for this reason.",
       "garden": "Fenced front yard (south, x199-215 z195-209; spruce fence, south gate on the door axis, gravel+dirt-path walk to the front door). West = vegetable patch (hydrated farmland w/ grown wheat/carrots/potatoes/beetroot + a scarecrow). East = flower garden with a cherry tree (bee nest + 2 bees), a small pond w/ lily pads & sugar cane, scattered flowers, a bench and berry bushes. Lantern lamp posts.",
       "note": "Built at player P_____L's location (~202,66,191), in the leveled district just west of the Grand Tower. 17x17 footprint, glass windows w/ timber mullions, gabled dark-oak roof + brick chimney. A 2-wide spruce staircase links every level (NW corner up; a 2nd flight by the east wall goes down to the basement).",
       "levels": {
