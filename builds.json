@@ -50,6 +50,22 @@
       "tps": { "arch": "232 67 40", "well": "232 67 43", "tavern": "251 67 47", "fortunes": "211 67 45", "stage": "251 68 62", "pen": "193 67 55" }
     },
     {
+      "name": "Castle Guards (datapack)",
+      "type": "system",
+      "datapack": "minecraft/datapacks/guards  (deployed to ~/minecraft-fabric/world/datapacks/guards on the mini)",
+      "created": "2026-06-22",
+      "summary": "Auto-respawning IRON-GOLEM guards that fight off monsters in/near the castle. A self-scheduling function keeps up to 6 golems (tag=castle_guard, named 'Castle Guard') alive, re-mustering at 4 courtyard posts (216/88, 248/88, 232/150, 196/120) whenever one dies — but only while a player is within the castle region (x160-310 z55-180) so it never over-spawns into unloaded chunks. Golems ignore the player + villagers and attack hostiles.",
+      "functions": {
+        "guards:init": "on world load (#minecraft:load) — creates the 'guards' scoreboard, sets cap=6, starts the patrol loop. Also the manual 'turn back on' command.",
+        "guards:patrol": "loops every 100t; runs maintain only if a player is in-region, then reschedules itself.",
+        "guards:maintain": "counts living guards in-region; if < cap, calls muster.",
+        "guards:muster": "summons one golem at the next of 4 rotating posts.",
+        "guards:reset": "kill all guards + reset rotation (they re-muster on the next tick).",
+        "guards:off": "stop the loop + remove guards."
+      },
+      "tune": "Change the cap with: scoreboard players set #cap guards <n>. pack_format uses min_format[4,0]/max_format[9999,0] to match the working deathstar packs."
+    },
+    {
       "name": "Looping Rollercoaster",
       "type": "structure",
       "material": "rails + red/white concrete",
