@@ -15,15 +15,17 @@
       "bounds": { "x": [200, 264], "y": [66, 90], "z": [100, 142] },
       "floorY": 66,
       "tp": "232 67 102",
-      "scripts": ["minecraft/scripts/castle_shell.py", "minecraft/scripts/castle_interior.py"],
-      "status": "first floor done; 2nd floor + basement to be built later",
+      "scripts": ["minecraft/scripts/castle_shell.py", "minecraft/scripts/castle_interior.py", "minecraft/scripts/castle_floor2.py"],
+      "status": "first + second floor done (master bedrooms); fully torch-lit. Basement TBD.",
       "layout": {
-        "main_hall": "central, x224-240 z100-142, TWO STORIES (y67-82). Iron throne (iron_block + lightning-rod sword spikes + iron_bars) on a blackstone dais at the north (z138-141) under a big stained-glass window; clerestory stained glass high on the E/W walls; chiseled-stone columns w/ lanterns; red-carpet runner; chandeliers; grand dark-oak entrance (south z100); two grand staircases up to the y75 level (the future 2nd floor).",
+        "main_hall": "central, x224-240 z100-142, TWO STORIES (y67-82). Iron throne (iron_block + lightning-rod sword spikes + iron_bars) on a blackstone dais at the north (z138-141) under a big stained-glass window; clerestory stained glass high on the E/W walls; chiseled-stone columns w/ lanterns; red-carpet runner; chandeliers; grand dark-oak entrance (south z100); two grand staircases up to the 2nd-floor balconies (y75).",
         "west_wing": "1 story (y67-74), x200-224: BALLROOM (front, quartz floor + chandeliers + musicians' dais), BARRACKS, ARMORY (anvil/smithing/armor stands), restroom (WC). Door from the hall at x224 z118.",
         "east_wing": "1 story, x240-264: DINING HALL (front, long table + chairs + chandeliers), KITCHEN (smoker/furnace/counters), SERVANT QUARTERS, STORAGE, restroom (WC). Door from the hall at x240 z118.",
-        "towers": "4 battlemented corner towers (7x7) to y88, with arrow slits"
+        "second_floor": "over both wings, floor y75 / walls y76-82 / deepslate roof y83 with parapets. LORDS CHAMBER (west, x201-223) and LADYS CHAMBER (east, x241-263): each a master suite with a four-poster canopy bed, brick fireplace (campfire), wardrobe/bookshelf, rug, hanging lantern, glass windows, wall torches. Reached via the grand stairs onto two balconies (x225-226 / x238-239) that overlook the great hall (iron-bar railings), then spruce doors through x224/x240 at z119.",
+        "towers": "4 battlemented corner towers (7x7) to y88, with arrow slits",
+        "lighting": "wall torches throughout every 1st- and 2nd-floor room + towers (hall lit at two heights) so the whole interior is illuminated / mob-free"
       },
-      "tps": { "throne": "232 67 139", "ballroom": "212 67 112", "dining": "252 67 112" }
+      "tps": { "throne": "232 67 139", "ballroom": "212 67 112", "dining": "252 67 112", "lords_chamber": "212 76 112", "ladys_chamber": "252 76 112" }
     },
     {
       "name": "Looping Rollercoaster",
