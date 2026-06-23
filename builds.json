@@ -65,6 +65,23 @@
       "note": "Built programmatically over RCON in ~1.2s. To change height: edit NFLOORS (then re-run tower_residents.py for the new floors). To climb faster than scaffolding, a soul-sand/water bubble elevator could replace the shaft."
     },
     {
+      "name": "Family House",
+      "type": "structure",
+      "material": "white_terracotta + spruce timber (Tudor)",
+      "created": "2026-06-22",
+      "script": "minecraft/scripts/family_house.py",
+      "bounds": { "x": [199, 215], "y": [60, 92], "z": [178, 194] },
+      "tp": "207 67 192",
+      "note": "Built at player P_____L's location (~202,66,191), in the leveled district just west of the Grand Tower. 17x17 footprint, glass windows w/ timber mullions, gabled dark-oak roof + brick chimney. A 2-wide spruce staircase links every level (NW corner up; a 2nd flight by the east wall goes down to the basement).",
+      "levels": {
+        "basement (y60)": "TREASURE VAULT: 6 auto-filling loot chests (buried_treasure, simple_dungeon, end_city_treasure, woodland_mansion, stronghold_corridor), a gold/emerald/diamond/amethyst hoard, an enchanting nook w/ bookshelves + anvil + brewing stand, a barrel wine cellar, cobwebs, lanterns.",
+        "1F (y66)": "LIVING ROOM: brick fireplace w/ chimney, red-wool sofa + stairs facing it, rug + coffee table, bookshelves, a dining nook and a kitchen counter (furnace/smoker/cauldron). Spruce front door (south, z194) + stoop.",
+        "2F (y72)": "4 BEDROOMS off a central hallway: PARENTS (blue, NW), BOY (light-blue, NE), GIRL (pink, SW), GUEST (white, SE). Each: bed, nightstand+lantern, wardrobe barrel, carpet, bookshelf, ceiling lamp, name sign.",
+        "3F (y78)": "STUDY: walls of bookshelves, a long desk w/ 3 lecterns + chairs, a reading rug w/ armchair, cartography + fletching tables.",
+        "attic (y84)": "random junk under the gabled roof: mineshaft loot chests, barrels, hay, cobwebs, potted dead bush/fern, a gable window each end."
+      }
+    },
+    {
       "name": "Castle Guards (datapack)",
       "type": "system",
       "datapack": "minecraft/datapacks/guards  (deployed to ~/minecraft-fabric/world/datapacks/guards on the mini)",
