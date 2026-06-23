@@ -29,6 +29,27 @@
       "tps": { "throne": "232 67 139", "ballroom": "212 67 112", "dining": "252 67 112", "lords_chamber": "212 76 112", "ladys_chamber": "252 76 112", "gate": "232 67 73", "statue": "232 67 76", "training_yard": "267 67 87", "sw_watchtower": "174 67 74" }
     },
     {
+      "name": "Market Fair",
+      "type": "structure",
+      "material": "wool awnings + spruce/oak",
+      "created": "2026-06-22",
+      "bounds": { "x": [176, 258], "y": [66, 85], "z": [38, 69] },
+      "floorY": 66,
+      "tp": "232 67 40",
+      "script": "minecraft/scripts/castle_fair.py",
+      "note": "On expanded+leveled land OUTSIDE the south gate (z<70). Kept x<=258 to avoid the Looping Rollercoaster (x261-309, z29-61).",
+      "features": [
+        "Main avenue (dirt_path + cobble) from the castle gate (x232) south to a WELCOME arch (z39) with bunting + banners; central WELL (x232 z41) with a roofed well-house.",
+        "8 merchant STALLS lining the avenue (striped wool awnings, counters w/ goods, workstation per trade, hanging lanterns): BAKERY(farmer), BUTCHERY(butcher), SMITHY(weaponsmith), APOTHECARY(cleric) on the west; FISHMONGER(fisherman), BOOKSELLER(librarian), WEAVERY(shepherd), TOOLERY(toolsmith) on the east. Each merchant is a NoAI profession villager.",
+        "LIVESTOCK pen (west, x182-204) fenced w/ trough+feed: 3 cows, 3 pigs, 4 chickens, 5 sheep + a farmer.",
+        "THE TAVERN (east, x246-258): open-front spruce hall, keg-barrel bar, tables/stools, cook + patron.",
+        "FORTUNE-TELLER tent (x211, purple/magenta wool peak) w/ amethyst+sea-lantern crystal ball + a cleric.",
+        "Performers' STAGE (x247 z60) raised deck w/ banner backdrop + note blocks + a performer.",
+        "Lamp posts + hay bales + flower pots + ~6 NoAI 'crowd' villagers. 19 villagers + 15 animals total."
+      ],
+      "tps": { "arch": "232 67 40", "well": "232 67 43", "tavern": "251 67 47", "fortunes": "211 67 45", "stage": "251 68 62", "pen": "193 67 55" }
+    },
+    {
       "name": "Looping Rollercoaster",
       "type": "structure",
       "material": "rails + red/white concrete",
