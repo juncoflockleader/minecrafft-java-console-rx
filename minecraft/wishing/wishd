@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# wishd {start|stop|restart|status} — manage the wish-capture daemon.
+BASE="$HOME/wishes"; PID="$BASE/wishd.pid"; LOGF="$BASE/wishd.log"; BIN="$BASE/bin/wish_tailer.py"
+running(){ [ -f "$PID" ] && kill -0 "$(cat "$PID")" 2>/dev/null; }
+case "$1" in
+  start)
+    if running; then echo "wishd already running (pid $(cat "$PID"))"; exit 0; fi
+    mkdir -p "$BASE/queue" "$BASE/done" "$BASE/backup"
+    [ -f "$BASE/control" ] || echo on > "$BASE/control"
+    nohup python3 "$BIN" >>"$LOGF" 2>&1 &
+    echo $! > "$PID"; sleep 1
+    running && echo "wishd started (pid $(cat "$PID"))" || { echo "FAILED — see $LOGF"; tail -5 "$LOGF"; } ;;
+  stop)    if running; then kill "$(cat "$PID")" 2>/dev/null; fi; rm -f "$PID"; echo "wishd stopped" ;;
+  restart) "$0" stop; sleep 1; "$0" start ;;
+  status)
+    if running; then echo "wishd: RUNNING (pid $(cat "$PID"))  control=$(cat "$BASE/control" 2>/dev/null)  queued=$(ls -1 "$BASE/queue" 2>/dev/null | wc -l | tr -d ' ')";
+    else echo "wishd: stopped"; fi ;;
+  *) echo "usage: wishd {start|stop|restart|status}" ;;
+esac

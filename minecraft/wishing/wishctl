@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# wishctl {on|off|status} — master switch for accepting/granting wishes.
+# 'off' keeps the daemon running but pauses capture (players are told it's closed)
+# and the grant-wishes agent idles. Does NOT stop the daemon (use `wishd stop` for that).
+BASE="$HOME/wishes"
+case "$1" in
+  on)     echo on  > "$BASE/control"; echo "🌟 wishing: ON" ;;
+  off)    echo off > "$BASE/control"; echo "🌙 wishing: OFF (paused)" ;;
+  status) echo "wishing: $(cat "$BASE/control" 2>/dev/null || echo on) | $("$BASE/bin/wishd" status)" ;;
+  *) echo "usage: wishctl {on|off|status}" ;;
+esac
