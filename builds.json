@@ -65,6 +65,23 @@
       "note": "Built programmatically over RCON in ~1.2s. To change height: edit NFLOORS (then re-run tower_residents.py for the new floors). To climb faster than scaffolding, a soul-sand/water bubble elevator could replace the shaft."
     },
     {
+      "name": "Launch Complex 39 (Shuttle)",
+      "type": "structure",
+      "material": "concrete + iron lattice + orange/white/black",
+      "created": "2026-06-22",
+      "script": "minecraft/scripts/launch_complex.py",
+      "bounds": { "x": [318, 384], "y": [59, 170], "z": [132, 198] },
+      "tp": "330 67 165",
+      "note": "On leveled land east of the apartment district (clear of the coaster x261-309 and district x<=266). Stack center (ET) x350 z165; ground y66; MLP deck y74.",
+      "parts": {
+        "pad": "66x66 gray/light-gray concrete apron w/ yellow hazard border + painted '39', gravel crawlerway approach from the west, oak-fence perimeter w/ floodlight poles + a 'LAUNCH COMPLEX 39' sign.",
+        "flame_trench_MLP": "deepslate flame trench (opens west) with an iron flame-deflector wedge; Mobile Launcher Platform deck on 4 pedestals bridging it, with flame holes under the 3 SSMEs + 2 SRBs.",
+        "stack": "vertical Shuttle stack ~y74->133: External Tank (orange_terracotta octagon, intertank band, ogive nose) center; two white SRBs w/ segment lines + nose cones + nozzles flanking on +/-z; ORBITER on the -x face — white body / black belly+nose, delta wings w/ black leading edges, vertical tail, body flap, 2 OMS pods, 3 gray SSME nozzles, light-blue cockpit windows.",
+        "FSS": "Fixed Service Structure: iron-lattice tower (corner columns + iron-bar belts, platform decks every 12) to y148 w/ red top; hammerhead crane boom + hook over the stack; orbiter access arm + hollow WHITE ROOM; GOX 'beanie cap' arm over the ET nose; rooftop lightning mast.",
+        "ground_support": "2 lightning catenary masts, a tall sound-suppression water tower (white + light-blue band), 2 LOX/LH2 storage tanks w/ feed pipes, perimeter floodlights."
+      }
+    },
+    {
       "name": "Family House",
       "type": "structure",
       "material": "white_terracotta + spruce timber (Tudor)",
